@@ -1,0 +1,8 @@
+baseurl:          /AICLASH
+
+markdown:         kramdown
+highlighter:      pygments
+paginate:         4
+
+title:            AIClash
+description:      "AIClash is clashing live AIs safely & harmoniously. "

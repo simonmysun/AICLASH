@@ -1,0 +1,28 @@
+---
+layout: default
+title: Home
+---
+<div class="">
+{% for rpost in paginator.posts %}
+  <div class="">
+    <h2 class=""><a href="{{ site.baseurl }}{{ rpost.url }}" title="{{ rpost.title }}">{{ rpost.title }}</a></h2>
+    <p class=""><time pubdate="{{ rpost.date }}">{{ rpost.date | date_to_string }}</time></p>
+    <p class="">{{ rpost.content | truncatewords:10 }}</p>
+  </div>
+{% endfor %}
+{% if paginator.total_pages > 1 %}
+  <nav class="">
+    <ul class="pagination pagination-lg">
+      <li class="{% if paginator.page == 1 %} disabled{% endif %}"><a href="{% if paginator.page == 1 %}javascript:void(0);{% else %}{{ site.baseurl }}/{%if paginator.page > 2 %}page{{ paginator.page |minus: 1 }}/{% endif %}{% endif %}"><span aria-hidden="true">&laquo;</span><span class="sr-only">Previous</span></a></li>
+  {% for page in (1..paginator.total_pages) %}
+    {% if page == paginator.page %}
+      <li class=""><a href="javascript:void(0);">{{ page }}</a></li>
+    {% else %}
+      <li><a href="{{ site.baseurl }}/{%if page != 1 %}page{{ page }}/{% endif %}">{{ page }}</a></li>
+    {% endif %}
+  {% endfor %}
+      <li class="{% if paginator.page == paginator.total_pages %} disabled{% endif %}"><a href="{% if paginator.page == paginator.total_pages %}javascript:void(0);{% else %}{{ site.baseurl }}/page{{ paginator.page |plus: 1 }}/{% endif %}"><span aria-hidden="true">&raquo;</span><span class="sr-only">Next</span></a></li>
+    </ul>
+  </nav>
+{% endif %}
+</div>
