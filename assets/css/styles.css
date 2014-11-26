@@ -1,0 +1,135 @@
+#main-wrap, #menu-wrap, #code-editor-wrap, #code-editor, #canvas-wrap {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+#menu-wrap {
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 100;
+}
+
+#menu {
+    position: fixed;
+    left: 20px;
+    bottom: 80px;
+    width: 270px;
+    height: 390px;
+    border-radius: 12px;
+    box-shadow: 20px 20px 200px #333;
+    border: 5px solid #5a8f00;
+    background: #fff;
+    color: #333;
+}
+
+#menu li {
+    border-radius: 12px;
+    border-bottom: 1px solid #ccc;
+}
+
+#menu:before {
+    content: "";
+    position: absolute;
+    bottom: -20px;
+    left: 13px;
+    border-width: 20px 20px 0;
+    border-style: solid;
+    border-color: #5a8f00 transparent;
+    display: block;
+    width: 0;
+}
+
+#menu:after {
+    content: "";
+    position: absolute;
+    bottom: -13px;
+    left: 20px;
+    border-width: 13px 13px 0;
+    border-style: solid;
+    border-color: #fff transparent;
+    display: block;
+    width: 0;
+}
+
+#menu-btn {
+    position: fixed;
+    left: 32px;
+    bottom: 20px;
+    transition: opacity 0.5s;
+    opacity: 0.65;
+    box-shadow: 0 0 10px #fff;
+    z-index: 105;
+}
+
+#menu-btn:hover {
+    opacity: 1;
+}
+
+#code-editor-wrap {
+    bottom: 74px;
+    transition: transform 0.5s;
+    transform: translateY(-100%);
+    background: rgba(255, 243, 196, 0.4);
+    box-shadow: 0 0 100px #333;
+    z-index: 10;
+}
+
+.code-editor-visible {
+    transform: translateY(0)!important;
+}
+
+#ctrl-btn {
+    position: absolute;
+    bottom: -54px;
+    left: 150px;
+    transition: opacity 0.5s;
+    opacity: 0.65;
+    z-index: 10;
+}
+
+#ctrl-btn:hover {
+    opacity: 1;
+}
+
+#canvas-wrap {
+}
+
+#canvas-container {
+    z-index: -1;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 800px;
+    height: 600px;
+    margin-top: -300px;
+    margin-left: -400px;
+}
+
+#canvas {
+    box-shadow: 0 0 100px #333;
+}
+
+#notice-wrap {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 300px;
+    height: 300px;
+    overflow: hidden;
+}
+
+#notice-wrap>p {
+    margin: 20px;
+    padding: 10px;
+    width: 260px;
+    border-radius: 10px;
+    background: black;
+    box-shadow: 2px 3px 30px 5px #000;
+    color: #777;
+}
+
+.ace-monokai {
+    background: rgba(39, 40, 34, 0.7)!important;
+}
