@@ -14,9 +14,9 @@
 #menu {
     position: fixed;
     left: 20px;
-    bottom: 80px;
-    width: 270px;
-    height: 390px;
+    bottom: 75px;
+    width: 170px;
+    height: 250px;
     border-radius: 12px;
     box-shadow: 20px 20px 200px #333;
     border: 5px solid #5a8f00;
@@ -83,7 +83,7 @@
 #ctrl-btn {
     position: absolute;
     bottom: -54px;
-    left: 150px;
+    left: 120px;
     transition: opacity 0.5s;
     opacity: 0.65;
     z-index: 10;
