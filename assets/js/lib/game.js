@@ -1,10 +1,12 @@
 function Game() {
     this.map = [];
-    for(var i = 0; i < 400; i ++ ) {
+    this.width = 200;
+    this.height = 150;
+    for(var i = 0; i < this.width; i ++ ) {
         this.map[i] = [];
-        for(var j = 0; j < 300; j ++ ) {
+        for(var j = 0; j < this.height; j ++ ) {
             this.map[i][j] = {
-                data: 9,
+                data: 2,
                 visited: [0, 0]
             }
         }

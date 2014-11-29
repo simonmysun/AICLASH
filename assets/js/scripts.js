@@ -1,17 +1,3 @@
-function Game() {
-    this.map = [];
-    for(var i = 0; i < 400; i ++ ) {
-        this.map[i] = [];
-        for(var j = 0; j < 300; j ++ ) {
-            this.map[i][j] = {
-                data: 9,
-                visited: [0, 0]
-            }
-        }
-    }
-    return 0;
-}
-
 var game = new Game();
 
 $(document).ready(function() {
@@ -26,13 +12,8 @@ $(document).ready(function() {
     editor.setTheme("ace/theme/monokai");
     editor.getSession().setMode("ace/mode/javascript");
     //console.log(editor.getValue());
-
-    $()
-    $.getScript('../assets/js/lib/paint.js', function() {
-        var canvas = $('#canvas');
-        var context = canvas[0].getContext('2d');
-        paint(context, game.map, 1000 / 60);
-    });
+    var canvas = $('#canvas')[0];
+    paint(canvas, game, 1000 / 25);
 });
 
 
