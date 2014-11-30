@@ -109,6 +109,7 @@
 
 #canvas {
     box-shadow: 0 0 100px #333;
+    border: 1px solid #333;
 }
 
 .ace-monokai {
