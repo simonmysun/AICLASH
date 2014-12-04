@@ -5,10 +5,9 @@ onmessage = function(sdata) {
     var data = sdata.data;
     if(data.type === 'init') {
         game.init(data.data.width, data.data.height, data.data.method);
-    }
-    if(data.type === 'reset') {
+    } else if(data.type === 'reset') {
         game = new Game();
-    }
+    }// else if(data.action)
 }
 
 var updateMap = function(data) {
@@ -21,11 +20,19 @@ var updateMap = function(data) {
 function Game() {
     var self = this;
     self.init = function(width, height, method) {
+        postMessage({
+            type: 'wait'
+        });
         self.width = width;
         self.height = height;
         self.map = new Map(self.width, self.height);
         self.map.init();
         self.map.generate(method);
+        self.players = [];
+        var player = {};
+        postMessage({
+            type: 'done'
+        });
     }
     return self;
 }

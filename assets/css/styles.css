@@ -1,5 +1,5 @@
-#main-wrap, #menu-wrap, #code-editor-wrap, #code-editor, #canvas-wrap {
-    position: absolute;
+#main-wrap, #menu-wrap, #code-editor-wrap, #canvas-wrap, .code-editor {
+    position: absolute!important;
     top: 0;
     right: 0;
     bottom: 0;
@@ -114,4 +114,39 @@
 
 .ace-monokai {
     background: rgba(39, 40, 34, 0.7)!important;
+}
+
+#code-editors {
+    height: 100%;
+    width: 200%;
+    position: relative;
+}
+
+#code-editors-container {
+    position: absolute;
+    top: 42px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow: hidden;
+}
+
+#tabs {
+    height: 42px;
+    background: rgba(33, 33, 33, 0.9);
+}
+
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
+    color: #333;
+    cursor: default;
+    background-color: rgba(255, 255, 255, 0.5);
+    border: 1px solid #777;
+    border-bottom-color: transparent;
+}
+
+.editor-wrap {
+    position: relative;
+    width: 50%;
+    height: 100%;
+    float: left;
 }

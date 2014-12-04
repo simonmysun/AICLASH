@@ -3,7 +3,22 @@ layout: default
 title: Sandbox
 ---
 <div id="code-editor-wrap">
-  <div id="code-editor">console.log(0);</div>
+  <div id="tabs">
+    <ul class="nav nav-tabs">
+      <li class="active" data-editor="0"><a href="#">Player 1</a></li>
+      <li data-editor="1"><a href="#">Player 2</a></li>
+    </ul>
+  </div>
+  <div id="code-editors-container">
+    <div id="code-editors">
+      <div class="editor-wrap">
+        <div class="code-editor" id="editor0">console.log(0);</div>
+      </div>
+      <div class="editor-wrap">
+        <div class="code-editor" id="editor1">console.log(0);</div>
+      </div>
+    </div>
+  </div>
   <div id="ctrl-btn">
     <a href="#" class="btn btn-info" id="code-editor-btn"><span class="glyphicon glyphicon-chevron-down"></span>&nbsp;Code</a>
     <a href="#" class="btn btn-success" id="btn-run"><span class="glyphicon glyphicon-play"></span>&nbsp;Run</a>
@@ -15,7 +30,9 @@ title: Sandbox
     <canvas id="canvas" width="798px" height="598px"></canvas>
   </div>
 </div>
+<script src="{{ site.baseurl }}/assets/lib/dat.gui/dat.gui.min.js"></script>
+<script src="{{ site.baseurl }}/assets/lib/base64/base64.js"></script>
 <script src="{{ site.baseurl }}/assets/js/lib/game.main.js"></script>
-<script src="{{ site.baseurl }}/assets/js/lib/paint.js"></script>
+<script src="{{ site.baseurl }}/assets/js/lib/painter.js"></script>
 <script src="{{ site.baseurl }}/assets/js/lib/algorithms.js"></script>
 <script src="{{ site.baseurl }}/assets/js/main.js"></script>

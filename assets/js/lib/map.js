@@ -48,6 +48,7 @@ var Map = function(width, height) {
         }
         for(var i = 0; i < width; i ++ ) {
             for(var j = 0; j < height; j ++ ) {
+/*
                 if(self.legal(i, j - 1)) {
                     edgeList.push({
                         from: {
@@ -60,6 +61,7 @@ var Map = function(width, height) {
                         }
                     });
                 }
+*/
                 if(self.legal(i + 1, j)) {
                     edgeList.push({
                         from: {
@@ -84,6 +86,7 @@ var Map = function(width, height) {
                         }
                     });
                 }
+/*
                 if(self.legal(i - 1, j)) {
                     edgeList.push({
                         from: {
@@ -96,6 +99,7 @@ var Map = function(width, height) {
                         }
                     });
                 }
+*/
             }
         }
         return edgeList;
@@ -121,7 +125,7 @@ var Map = function(width, height) {
                         data: self.data[e.to.x][e.to.y]
                     });
                 } else {
-                    if(Math.random() < 0.07) {
+                    if(Math.random() < 0.07 * 0.07) {
                         self.data[e.from.x][e.from.y] |= direction(e.from, e.to);
                         self.data[e.to.x][e.to.y] |= direction(e.to, e.from);
                         updateMap({
