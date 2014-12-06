@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
     <title>{% if page.title %}{{ page.title }} - {% endif %}{{ site.title }}</title>
-
+    {% include loader.style.html %}
     <!-- Bootstrap -->
     <link href="{{ site.baseurl }}/assets/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="{{ site.baseurl }}/assets/css/styles.css" rel="stylesheet">
@@ -17,17 +17,18 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     <script src="{{ site.baseurl }}/assets/lib/jquery/js/jquery-2.1.1.min.js"></script>
+    <script>baseUrl = '{{ site.baseurl }}';</script>
   </head>
   <body>
 
     <div id="main-wrap">
+      {% include loader.html %}
       {{ content }}
       {% include menu.html %}
     </div>
 
     <script src="{{ site.baseurl }}/assets/lib/bootstrap/js/bootstrap.min.js"></script>
-    <script src="{{ site.baseurl }}/assets/lib/ace-builds/ace.js" type="text/javascript" charset="utf-8"></script>
-    <script src="{{ site.baseurl }}/assets/lib/prefixfree/js/prefixfree.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="{{ site.baseurl }}/assets/lib/prefixfree/js/prefixfree.min.js"></script>
     <script src="{{ site.baseurl }}/assets/js/scripts.js"></script>
   </body>
 </html>
