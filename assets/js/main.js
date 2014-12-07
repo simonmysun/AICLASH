@@ -29,7 +29,7 @@ requirejs([], function() {
             setTimeout(function() {
                 $('#code-editor-wrap').toggleClass('code-editor-visible');
                 $(this).find('span').toggleClass('glyphicon-chevron-down').toggleClass('glyphicon-chevron-up');
-            }, 1000);
+            }, 500);
             $('#tabs>ul>li').click(function() {
                 $('#code-editors').animate({'left': (- parseInt($(this).attr('data-editor')) * 100) + '%'});
                 $('#tabs>ul>li').removeClass('active');
@@ -54,7 +54,7 @@ requirejs([], function() {
             gui.add(game, 'reset');
             gui.add(game, 'pause');
             gui.add(painter, 'delay');
-            $('.loader-wrap').fadeOut();
+            $('.loader-wrapper').fadeOut();
         });
     });
 });

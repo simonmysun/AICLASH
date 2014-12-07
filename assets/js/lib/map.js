@@ -108,28 +108,15 @@ var Map = function(width, height) {
         if(method === 'random kruskal') {
             var edgeList = self.edgeList();
             var set = new Set(self.width * self.height);
-            while(edgeList.length > 0) {
-                var e = edgeList.randomPop();
-                if(set.check(number(e.from.x, e.from.y), number(e.to.x, e.to.y)) == false) {
-                    set.merge(number(e.from.x, e.from.y), number(e.to.x, e.to.y));
-                    self.data[e.from.x][e.from.y] |= direction(e.from, e.to);
-                    self.data[e.to.x][e.to.y] |= direction(e.to, e.from);
-                    updateMap({
-                        x: e.from.x,
-                        y: e.from.y,
-                        data: self.data[e.from.x][e.from.y]
-                    });
-                    updateMap({
-                        x: e.to.x,
-                        y: e.to.y,
-                        data: self.data[e.to.x][e.to.y]
-                    });
-                } else {
-                    if(Math.random() < 0.07 * 0.07) {
+            var process = function() {
+                for(var x = 0; x < Math.min(edgeList.length, 30); x ++ ) {
+                    var e = edgeList.randomPop();
+                    if(set.check(number(e.from.x, e.from.y), number(e.to.x, e.to.y)) == false) {
+                        set.merge(number(e.from.x, e.from.y), number(e.to.x, e.to.y));
                         self.data[e.from.x][e.from.y] |= direction(e.from, e.to);
                         self.data[e.to.x][e.to.y] |= direction(e.to, e.from);
                         updateMap({
-                            x: e.from.x,
+                        x: e.from.x,
                             y: e.from.y,
                             data: self.data[e.from.x][e.from.y]
                         });
@@ -138,9 +125,28 @@ var Map = function(width, height) {
                             y: e.to.y,
                             data: self.data[e.to.x][e.to.y]
                         });
+                    } else {
+                        if(Math.random() < 0.07 * 0.07) {
+                            self.data[e.from.x][e.from.y] |= direction(e.from, e.to);
+                            self.data[e.to.x][e.to.y] |= direction(e.to, e.from);
+                            updateMap({
+                                x: e.from.x,
+                                y: e.from.y,
+                                data: self.data[e.from.x][e.from.y]
+                            });
+                            updateMap({
+                                x: e.to.x,
+                                y: e.to.y,
+                                data: self.data[e.to.x][e.to.y]
+                            });
+                        }
+                    }
+                    if(edgeList.length > 0) {
+                        setTimeout(process, 10);
                     }
                 }
             }
+            setTimeout(process, 10);
         }
     };
     return self;
