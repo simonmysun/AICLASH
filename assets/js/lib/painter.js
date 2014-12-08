@@ -55,19 +55,15 @@ function Painter(canvas, game, delay) {
     self.pushPaintEvent = function(e) {
         paintQueue.push(e);
     };
-    self.clearPaintQueue = function() {
-        paintQueue = [];
-    }
     var render = function() {
-        //console.time('render');
+        stats.end();
+        stats.begin();
         var k = 1000;
         while(paintQueue.length > 0 && k > 0) {
             var c = paintQueue.pop();
             paintCell(c.x, c.y);
             k -- ;
         }
-        //console.log(1000 - k);
-        //console.timeEnd('render');
         setTimeout(render, self.delay);
     };
     render();

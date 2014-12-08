@@ -6,12 +6,14 @@ requirejs([], function() {
         'assets/lib/ace-builds/ace', 
         'assets/lib/dat.gui/js/dat.gui.min', 
         'assets/lib/base64/js/base64', 
+        'assets/lib/stat.js/js/stats.min', 
         'assets/js/lib/game.main', 
         'assets/js/lib/painter', 
         'assets/js/lib/algorithms'
     ], function() {
         game = new Game();
         painter = {};
+        stats = new Stats();
         
         $(document).ready(function() {
             var editors = [ace.edit("editor0"), ace.edit("editor1")];
@@ -21,7 +23,7 @@ requirejs([], function() {
             editors[1].getSession().setMode("ace/mode/javascript");
             var canvas = $('#canvas')[0];
             game.init();
-            painter = new Painter(canvas, game, 1000 / 25);
+            painter = new Painter(canvas, game, 1000 / 60);
             $('#code-editor-btn').click(function() {
                 $('#code-editor-wrap').toggleClass('code-editor-visible');
                 $(this).find('span').toggleClass('glyphicon-chevron-down').toggleClass('glyphicon-chevron-up');
@@ -54,6 +56,11 @@ requirejs([], function() {
             gui.add(game, 'reset');
             gui.add(game, 'pause');
             gui.add(painter, 'delay');
+            stats.setMode(1); 
+            stats.domElement.style.position = 'absolute';
+            stats.domElement.style.right = '0px';
+            stats.domElement.style.bottom = '0px';
+            document.body.appendChild( stats.domElement );
             $('.loader-wrapper').fadeOut();
         });
     });
