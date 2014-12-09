@@ -55,6 +55,9 @@ function Painter(canvas, game, delay) {
     self.pushPaintEvent = function(e) {
         paintQueue.push(e);
     };
+    self.clearPaintQueue = function() {
+        paintQueue = [];
+    };
     var render = function() {
         stats.end();
         stats.begin();

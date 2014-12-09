@@ -23,7 +23,7 @@ requirejs([], function() {
             editors[1].getSession().setMode("ace/mode/javascript");
             var canvas = $('#canvas')[0];
             game.init();
-            painter = new Painter(canvas, game, 1000 / 60);
+            painter = new Painter(canvas, game, 1000 / 25);
             $('#code-editor-btn').click(function() {
                 $('#code-editor-wrap').toggleClass('code-editor-visible');
                 $(this).find('span').toggleClass('glyphicon-chevron-down').toggleClass('glyphicon-chevron-up');
