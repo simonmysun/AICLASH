@@ -7,7 +7,7 @@
 }
 
 #menu-wrap {
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(255, 255, 255, 0.4);
     z-index: 100;
 }
 
@@ -71,7 +71,6 @@
     bottom: 74px;
     transition: transform 0.5s;
     transform: translateY(-100%);
-    background: rgba(255, 243, 196, 0.4);
     box-shadow: 0 0 100px #333;
     z-index: 10;
 }
@@ -94,6 +93,8 @@
 }
 
 #canvas-wrap {
+    background: #272822;
+    z-index: -10;
 }
 
 #canvas-container {
@@ -108,8 +109,8 @@
 }
 
 #canvas {
-    box-shadow: 0 0 100px #333;
-    border: 1px solid #333;
+    /*box-shadow: 0 0 100px #fff;*/
+    border: 1px solid #272822;
 }
 
 .ace-monokai {

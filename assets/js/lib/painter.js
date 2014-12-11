@@ -2,12 +2,14 @@ function Painter(canvas, game, delay) {
     var self = this;
     var paintQueue = [];
     var ctx = canvas.getContext('2d');
+    var wallColor = '#272822';
+    var cellColor = '#fffbeb';
     self.delay = delay || (1000 / 30);
     var paintCell = function(x, y) {
         var cellSize = 400 / game.width;
-        ctx.fillStyle="#000";
+        ctx.fillStyle = wallColor;
         ctx.lineWidth = cellSize;
-        ctx.strokeStyle = '#fffbeb';
+        ctx.strokeStyle = cellColor;
         ctx.lineCap = 'square';
         ctx.fillRect((x - 1) * cellSize * 2 + cellSize, (y - 1) * cellSize * 2 + cellSize, 6, 6);
         if((game.map.data[x][y] & 1) > 0) {
@@ -37,10 +39,10 @@ function Painter(canvas, game, delay) {
     };
     self.renderAll = function() {
         var cellSize = 400 / game.width;
-        ctx.fillStyle="#000";
+        ctx.fillStyle = wallColor;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         ctx.lineWidth = cellSize;
-        ctx.strokeStyle = '#fffbeb';
+        ctx.strokeStyle = cellColor;
         ctx.lineCap = 'square';
         for(var i = 0; i < game.width; i ++ ) {
             for(var j = 0; j < game.height; j ++ ) {
