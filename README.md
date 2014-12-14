@@ -6,7 +6,7 @@ AIClash is clashing live AIs safely &amp; harmoniously.
 
 ## Usage
 
-This paragraph is tranlated and compiled from [here](https://github.com/fex-team/fex-team.github.io/blob/master/README.md). This is an instruction of this repository. To learn how to write AI code, please visit [AICLASH/Introducion](http://simonmysun.github.io/AICLASH/intro/) and [AICLASH/API Reference]((http://simonmysun.github.io/AICLASH/api/)
+This paragraph is tranlated and compiled from [here](https://github.com/fex-team/fex-team.github.io/blob/master/README.md). This is an instruction of this repository. To learn how to write AI code, please visit [AICLASH/Introducion](http://simonmysun.github.io/AICLASH/intro/) and [AICLASH/API Reference](http://simonmysun.github.io/AICLASH/api/)
 
 This programme is build with [jekyll](http://jekyllrb.com/). To preview please visit [online edition](http://simonmysun.github.io/AICLASH) or run a Jekyll server locally. 
 
