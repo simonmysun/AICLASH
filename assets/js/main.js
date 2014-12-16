@@ -48,7 +48,8 @@ requirejs([], function() {
                         game.resetWorkers();
                         game.run();
                     }
-                    $(this).toggleClass('btn-success').toggleClass('btn-danger').find('span').toggleClass('glyphicon-play').toggleClass('glyphicon-stop');        }
+                    $(this).toggleClass('btn-success').toggleClass('btn-danger').toggleClass('text-stop').toggleClass('text-run').find('span').toggleClass('glyphicon-play').toggleClass('glyphicon-stop');
+                }
             });
             var gui = new dat.GUI();
             gui.add(game, 'width');

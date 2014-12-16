@@ -155,3 +155,10 @@
 .nav-tabs>li>a {
     padding: 3px 5px;
 }
+
+.text-run:after {
+    content: "Run"
+}
+.text-stop:after {
+    content: "Stop"
+}

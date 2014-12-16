@@ -1,18 +1,19 @@
-//'rgba(' + Math.min(game.map.visited[x][y][0] * 255, 255) + ', 0, ' + Math.min(game.map.visited[x][y][1] * 255, 255) + ', 0.5)'
 function Painter(canvas, game, delay) {
     var self = this;
     var paintQueue = [];
     var ctx = canvas.getContext('2d');
     var wallColor = '#272822';
-    var cellColor = '#fffbeb';
+    var cellColor = '#fff';
+    self.alphaInBlend = 0.6;
     self.delay = delay || (1000 / 30);
     var paintCell = function(x, y) {
         var cellSize = 400 / game.width;
-        ctx.fillStyle = wallColor;
         ctx.lineWidth = cellSize;
-        ctx.strokeStyle = cellColor;
+        var colorR = Math.floor((Math.pow(self.alphaInBlend, game.map.visited[x][y][0]) * (Math.pow(self.alphaInBlend, game.map.visited[x][y][1]) - 1) + 1) * 255);
+        var colorG = Math.floor(Math.pow(self.alphaInBlend, game.map.visited[x][y][0] + game.map.visited[x][y][1]) * 255);
+        var colorB = Math.floor((Math.pow(self.alphaInBlend, game.map.visited[x][y][1]) * (Math.pow(self.alphaInBlend, game.map.visited[x][y][0]) - 1) + 1) * 255);
+        ctx.strokeStyle = 'rgb(' + colorR + ', ' + colorG + ', ' + colorB + ')';
         ctx.lineCap = 'square';
-        ctx.fillRect((x - 1) * cellSize * 2 + cellSize, (y - 1) * cellSize * 2 + cellSize, 6, 6);
         if((game.map.data[x][y] & 1) > 0) {
             ctx.beginPath();
             ctx.moveTo(x * cellSize * 2 + cellSize / 2, y * cellSize * 2 + cellSize / 2);
