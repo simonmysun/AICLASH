@@ -1,3 +1,4 @@
+//'rgba(' + Math.min(game.map.visited[x][y][0] * 255, 255) + ', 0, ' + Math.min(game.map.visited[x][y][1] * 255, 255) + ', 0.5)'
 function Painter(canvas, game, delay) {
     var self = this;
     var paintQueue = [];

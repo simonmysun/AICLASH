@@ -13,10 +13,10 @@ onmessage = function(sdata) {
 var action = [];
 
 var takeAction = function(action) {
-    postMessage() {
+    postMessage({
         type: 'next step',
         data: action
-    };
+    });
 };
 
 var onMyTurn = function() {

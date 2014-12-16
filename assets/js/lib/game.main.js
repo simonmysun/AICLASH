@@ -17,8 +17,13 @@ var Game = function() {
         };
         for(var i = 0; i < self.width; i ++ ) {
             self.map.data[i] = [];
+            self.map.visited[i] = [];
             for(var j = 0; j < self.height; j ++ ) {
                 self.map.data[i][j] = 0;
+                self.map.visited[i][j] = [];
+                for(var k = 0; k < self.playerNum; k ++ ) {
+                    self.map.visited[i][j][k] = 0;
+                }
             }
         }
         gameWorker = new Worker('./../assets/js/lib/game.worker.js');
@@ -33,7 +38,7 @@ var Game = function() {
         gameWorker.onmessage = function(sdata) {
             var data = sdata.data;
             if(data.type === 'update map') {
-            self.map.data[data.data.x][data.data.y] = data.data.data;
+                self.map.data[data.data.x][data.data.y] = data.data.data;
                 painter.pushPaintEvent(data.data);
             }
             if(data.type === 'wait') {
