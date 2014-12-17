@@ -1,12 +1,13 @@
-var game = {};
-
 onmessage = function(sdata) {
     var data = sdata.data;
+    //console.log(data);
     if(data.type === 'init') {
         importScripts(data.src);
-    } else if(data.type === 'game status') {
-        game = data.data;
-        onMyTurn();
+    } else if(data.type === 'query') {
+        postMessage({
+            type: 'action',
+            action: onMyTurn(data.game)
+        });
     }
 };
 
@@ -20,5 +21,5 @@ var takeAction = function(action) {
 };
 
 var onMyTurn = function() {
-    
+    return [0, 0, 0];
 };

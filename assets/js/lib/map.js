@@ -4,10 +4,13 @@ var Map = function(width, height) {
     self.height = height;
     self.init = function() {
         self.data = [];
+        self.visited = [];
         for(var i = 0; i < self.width; i ++ ) {
             self.data[i] = [];
+            self.visited[i] = [];
             for(var j = 0; j < self.height; j ++ ) {
                 self.data[i][j] = 0;
+                self.visited[i][j] = [0, 0];
             }
         }
     };
@@ -116,7 +119,7 @@ var Map = function(width, height) {
                         self.data[e.from.x][e.from.y] |= direction(e.from, e.to);
                         self.data[e.to.x][e.to.y] |= direction(e.to, e.from);
                         updateMap({
-                        x: e.from.x,
+                            x: e.from.x,
                             y: e.from.y,
                             data: self.data[e.from.x][e.from.y]
                         });
@@ -126,7 +129,7 @@ var Map = function(width, height) {
                             data: self.data[e.to.x][e.to.y]
                         });
                     } else {
-                        if(Math.random() < 0.07 * 0.07) {
+                        if(Math.random() < 0.0) {
                             self.data[e.from.x][e.from.y] |= direction(e.from, e.to);
                             self.data[e.to.x][e.to.y] |= direction(e.to, e.from);
                             updateMap({

@@ -4,7 +4,7 @@ function Painter(canvas, game, delay) {
     var ctx = canvas.getContext('2d');
     var wallColor = '#272822';
     var cellColor = '#fff';
-    self.alphaInBlend = 0.6;
+    self.alphaInBlend = 0.7;
     self.delay = delay || (1000 / 30);
     var paintCell = function(x, y) {
         var cellSize = 400 / game.width;
@@ -17,25 +17,25 @@ function Painter(canvas, game, delay) {
         if((game.map.data[x][y] & 1) > 0) {
             ctx.beginPath();
             ctx.moveTo(x * cellSize * 2 + cellSize / 2, y * cellSize * 2 + cellSize / 2);
-            ctx.lineTo(x * cellSize * 2 + cellSize / 2, (y - 1) * cellSize * 2 + cellSize / 2);
+            ctx.lineTo(x * cellSize * 2 + cellSize / 2, (y - 0.5) * cellSize * 2 + cellSize / 2);
             ctx.stroke();
         }
         if((game.map.data[x][y] & 2) > 0) {
             ctx.beginPath();
             ctx.moveTo(x * cellSize * 2 + cellSize / 2, y * cellSize * 2 + cellSize / 2);
-            ctx.lineTo((x + 1) * cellSize * 2 + cellSize / 2, y * cellSize * 2 + cellSize / 2);
+            ctx.lineTo((x + 0.5) * cellSize * 2 + cellSize / 2, y * cellSize * 2 + cellSize / 2);
             ctx.stroke();
         }
         if((game.map.data[x][y] & 4) > 0) {
             ctx.beginPath();
             ctx.moveTo(x * cellSize * 2 + cellSize / 2, y * cellSize * 2 + cellSize / 2);
-            ctx.lineTo(x * cellSize * 2 + cellSize / 2, (y + 1) * cellSize * 2 + cellSize / 2);
+            ctx.lineTo(x * cellSize * 2 + cellSize / 2, (y + 0.5) * cellSize * 2 + cellSize / 2);
             ctx.stroke();
         }
         if((game.map.data[x][y] & 8) > 0) {
             ctx.beginPath();
             ctx.moveTo(x * cellSize * 2 + cellSize / 2, y * cellSize * 2 + cellSize / 2);
-            ctx.lineTo((x - 1) * cellSize * 2 + cellSize / 2, y * cellSize * 2 + cellSize / 2);
+            ctx.lineTo((x - 0.5) * cellSize * 2 + cellSize / 2, y * cellSize * 2 + cellSize / 2);
             ctx.stroke();
         }
     };
@@ -63,8 +63,6 @@ function Painter(canvas, game, delay) {
         paintQueue = [];
     };
     var render = function() {
-        stats.end();
-        stats.begin();
         var k = 1000;
         while(paintQueue.length > 0 && k > 0) {
             var c = paintQueue.pop();

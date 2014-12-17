@@ -16,14 +16,12 @@ requirejs([], function() {
         stats = new Stats();
         
         $(document).ready(function() {
-            var editors = [ace.edit("editor0"), ace.edit("editor1")];
-            editors[0].setTheme("ace/theme/monokai");
-            editors[0].getSession().setMode("ace/mode/javascript");
-            editors[1].setTheme("ace/theme/monokai");
-            editors[1].getSession().setMode("ace/mode/javascript");
-            var canvas = $('#canvas')[0];
+            var editors = [ace.edit('editor0'), ace.edit('editor1')];
+            contentRecover(editors);
             game.init();
+            var canvas = $('#canvas')[0];
             painter = new Painter(canvas, game, 1000 / 25);
+            game.resetMap();
             $('#code-editor-btn').click(function() {
                 $('#code-editor-wrap').toggleClass('code-editor-visible');
                 $(this).find('span').toggleClass('glyphicon-chevron-down').toggleClass('glyphicon-chevron-up');
@@ -44,9 +42,8 @@ requirejs([], function() {
                         game.setScript(1, editors[1].getValue());
                         game.run();
                     } else {
-                        running = 0;
-                        game.resetWorkers();
-                        game.run();
+                        game.running = 0;
+                        game.init();
                     }
                     $(this).toggleClass('btn-success').toggleClass('btn-danger').toggleClass('text-stop').toggleClass('text-run').find('span').toggleClass('glyphicon-play').toggleClass('glyphicon-stop');
                 }
@@ -54,7 +51,7 @@ requirejs([], function() {
             var gui = new dat.GUI();
             gui.add(game, 'width');
             gui.add(game, 'height');
-            gui.add(game, 'reset');
+            gui.add(game, 'resetMap');
             gui.add(game, 'pause');
             gui.add(painter, 'delay');
             stats.setMode(1); 
@@ -66,3 +63,34 @@ requirejs([], function() {
         });
     });
 });
+
+var contentRecover = function(editors) {
+    for(var i = 0; i < 2; i ++ ) {
+        editors[i].setTheme('ace/theme/monokai');
+        editors[i].getSession().setMode('ace/mode/javascript');
+        editors[i].on('change', function(e) {
+            var code = [];
+            for(var j = 0; j < 2; j ++ ) {
+                code.push(editors[j].getValue());
+            }
+            document.location.hash = Base64.encode(code.join('\x7f'));
+            if(typeof(Storage) !== 'undefined') {
+                localStorage.setItem('editorContent-' + i, code[i]);
+            }
+        });
+    }
+    if(document.location.hash.length > 0) {
+        var urlStorage = Base64.decode(unescape((location).hash)).split("\x7F")||"";
+        for(var i = 0; i < 2; i ++ ) {
+            editors[i].setValue(urlStorage[i]);
+        }
+    } else if(typeof(Storage) !== 'undefined') {
+        for(var i = 0; i < 2; i ++ ) {
+            var code = localStorage.getItem('editorContent-' + i);
+            if(typeof code === 'string') {
+                editors[i].setValue(code);
+            }
+        }
+    }
+}
+

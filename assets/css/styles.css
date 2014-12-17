@@ -16,7 +16,7 @@
     left: 20px;
     bottom: 75px;
     width: 170px;
-    height: 250px;
+    padding-bottom: 15px;
     border-radius: 12px;
     box-shadow: 20px 20px 200px #333;
     border: 5px solid #5a8f00;
@@ -27,6 +27,10 @@
 #menu li {
     border-radius: 12px;
     border-bottom: 1px solid #ccc;
+}
+
+#menu .nav-pills>li>a {
+    border-radius: 12px;
 }
 
 #menu:before {
