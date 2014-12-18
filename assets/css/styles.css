@@ -166,3 +166,53 @@
 .text-stop:after {
     content: "Stop"
 }
+
+.homepage, .homepage>.container {
+    height: 100%;
+}
+
+.homepage h1, .homepage p:first-of-type {
+    text-shadow: 1px 1px 1px #fff;
+}
+
+.homepage .homepage-box {
+    position: absolute;
+    bottom: 100px;
+}
+
+.homepage-next {
+    width: 100%;
+    height: 1px;
+    overflow: visible;
+    margin-top: -100px;
+    margin-bottom: 100px;
+}
+
+.homepage-next>a {
+    color: #000;
+}
+.homepage-next>a:hover {
+    color: #77f;
+}
+
+.homepage-next>a>div {
+    width: 40px;
+    height: 40px;
+    padding: 12px;
+    margin: 0 auto;
+    border-radius: 20px;
+    box-shadow: 1px 1px 3px #555;
+    background: #fff;
+}
+
+.blog {
+    padding: 48px 0;
+    margin-bottom: 30px;
+}
+
+.jumbotron {
+    background-image: url(../img/header-bg.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}

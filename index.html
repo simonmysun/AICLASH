@@ -2,12 +2,31 @@
 layout: default
 title: Home
 ---
+<div class="jumbotron homepage">
+  <div class="container">
+    <div class="homepage-box">
+      <h1>AIClash</h1>
+      <p>AIClash is clashing live AIs safely & harmoniously. </p>
+      <p><a class="btn btn-primary btn-lg" href="{{ site.baseurl }}/sandbox/" role="button">Start now</a></p>
+    </div>
+  </div>
+</div>
+<div class="homepage-next">
+  <a>
+    <div>
+      <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+    </div>
+  </a>
+</div>
+<div class="blog">
+  <div class="container">
 <div class="">
+<h1>Blog</h1>
 {% for rpost in paginator.posts %}
   <div class="">
     <h2 class=""><a href="{{ site.baseurl }}{{ rpost.url }}" title="{{ rpost.title }}">{{ rpost.title }}</a></h2>
     <p class=""><time pubdate="{{ rpost.date }}">{{ rpost.date | date_to_string }}</time></p>
-    <p class="">{{ rpost.content | truncatewords:10 }}</p>
+    <p class="">{{ rpost.content | truncatewords:3 }}</p>
   </div>
 {% endfor %}
 {% if paginator.total_pages > 1 %}
@@ -25,4 +44,13 @@ title: Home
     </ul>
   </nav>
 {% endif %}
+</div>
+  </div>
+</div>
+<div class="homepage-next">
+  <a>
+    <div>
+      <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+    </div>
+  </a>
 </div>

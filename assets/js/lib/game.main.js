@@ -1,8 +1,8 @@
 var Game = function() {
     var self = this;
     self.gameWorker = {terminate: function() {}};
-    self.width = 200;
-    self.height = 150;
+    self.width = 128;
+    self.height = 96;
     self.playerNum = 2;
     self.gnomeNum = 3;
     self.wait = 0;

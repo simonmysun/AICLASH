@@ -129,7 +129,7 @@ var Map = function(width, height) {
                             data: self.data[e.to.x][e.to.y]
                         });
                     } else {
-                        if(Math.random() < 0.0) {
+                        if(Math.random() < 0.005) {
                             self.data[e.from.x][e.from.y] |= direction(e.from, e.to);
                             self.data[e.to.x][e.to.y] |= direction(e.to, e.from);
                             updateMap({
@@ -149,7 +149,7 @@ var Map = function(width, height) {
                     }
                 }
             }
-            setTimeout(process, 10);
+            setTimeout(process, 0);
         }
     };
     return self;

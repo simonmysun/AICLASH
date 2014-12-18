@@ -227,7 +227,7 @@ function Game() {
         postMessage({
             type: 'query'
         });
-        self.reduceAction.init(1, callback);
+        self.reduceAction.init(2, callback);
     };
     return self;
 }
