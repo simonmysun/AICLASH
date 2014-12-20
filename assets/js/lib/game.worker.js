@@ -3,7 +3,6 @@ importScripts('algorithms.js');
 
 onmessage = function(sdata) {
     var data = sdata.data;
-    //console.log(data);
     if(data.type === 'init') {
         game.init(data.data.width, data.data.height, data.data.method);
     } else if(data.type === 'reset') {

@@ -4,8 +4,9 @@ $(document).ready(function() {
     });
     if(typeof requirejs !== 'object') {
         $('.homepage-next').click(function() {
-            $('body').animate({scrollTop: $(this).next().position().top});
+            $('body').clearQueue().stop().animate({scrollTop: $(this).next().position().top}, 500);
         });
         $('.loader-wrapper').fadeOut();
     }
+    
 });

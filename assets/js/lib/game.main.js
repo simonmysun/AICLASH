@@ -1,8 +1,9 @@
+
 var Game = function() {
     var self = this;
     self.gameWorker = {terminate: function() {}};
-    self.width = 128;
-    self.height = 96;
+    self.width = 200;
+    self.height = 150;
     self.playerNum = 2;
     self.gnomeNum = 3;
     self.wait = 0;
@@ -50,7 +51,6 @@ var Game = function() {
         self.gameWorker = new Worker('./../assets/js/lib/game.worker.js');
         self.gameWorker.onmessage = function(sdata) {
             var data = sdata.data;
-            //console.log(data);
             if(data.type === 'update map') {
                 self.map.data[data.data.x][data.data.y] = data.data.data;
                 self.map.visited[data.data.x][data.data.y] = data.data.visited;
@@ -102,7 +102,8 @@ var Game = function() {
         for(var i = 0; i < self.gnomeNum; i ++ ) {
             var locX = self.gnomes[player][i].x;
             var locY = self.gnomes[player][i].y;
-            var vision = self.gnomes[player][i].vision
+            var vision = self.gnomes[player][i].vision;
+            //vision = 2; //FIXME
             game.gnomes[i] = {
                 x: locX,
                 y: locY,
@@ -167,7 +168,6 @@ var Game = function() {
             var gm = self.gameWorker;
             var onmessage = function(sdata) {
                 var data = sdata.data;
-                //console.log(data);
                 if(data.type = 'action') {
                     if(typeof data.action === 'object') {
                         gm.postMessage({
