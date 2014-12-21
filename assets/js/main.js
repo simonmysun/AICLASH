@@ -9,7 +9,8 @@ requirejs([], function() {
         'assets/lib/stat.js/js/stats.min', 
         'assets/js/lib/game.main', 
         'assets/js/lib/painter', 
-        'assets/js/lib/algorithms'
+        'assets/js/lib/algorithms', 
+        'assets/js/lib/stdlib'
     ], function() {
         game = new Game();
         painter = {};

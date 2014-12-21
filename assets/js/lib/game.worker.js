@@ -1,5 +1,6 @@
 importScripts('map.js');
 importScripts('algorithms.js');
+importScripts('stdlib.js');
 
 onmessage = function(sdata) {
     var data = sdata.data;

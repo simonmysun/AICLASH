@@ -1,3 +1,5 @@
+importScripts('stdlib.js');
+
 onmessage = function(sdata) {
     var data = sdata.data;
     //console.log(data);
