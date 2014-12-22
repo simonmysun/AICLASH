@@ -24,7 +24,7 @@ var updateMap = function(data) {
             data: data.data,
             visited: data.visited || game.map.visited[data.x][data.y] || 0
         }
-    });
+     });
 };
 
 var updateGnome = function(playerId, gnomeId, gnome) {
@@ -34,7 +34,8 @@ var updateGnome = function(playerId, gnomeId, gnome) {
         gnomeId: gnomeId,
         data: {
             x: gnome.x,
-            y: gnome.y
+            y: gnome.y,
+            vision: gnome.vision
         }
     });
 };
@@ -80,6 +81,7 @@ function Game() {
         self.playerNum = 2;
         self.gnomes = [];
         self.gnomes[0] = [];
+        self.buff = [1, 1];
         for(var g = 0; g < 3; g ++ ) {
             var gnome = {};
             gnome.x = 0;
@@ -157,6 +159,18 @@ function Game() {
                             currGnome.x -= 1;
                         }
                         self.map.visited[currGnome.x][currGnome.y][player] += 1;
+                        if(self.buff[0] >= 1) {
+                            if(currGnome.x === 0 && currGnome.y === self.height - 1) {
+                                currGnome.vision *= 2;
+                                self.buff[0] -= 1;
+                            }
+                        }
+                        if(self.buff[1] >= 1) {
+                            if(currGnome.x === self.width - 1 && currGnome.y === 0) {
+                                currGnome.vision *= 2;
+                                self.buff[1] -= 1;
+                            }
+                        }
                         updateGnome(player, i, currGnome);
                         updateMap({
                             x: currGnome.x,
@@ -213,6 +227,18 @@ function Game() {
                         currGnome.x -= 1;
                     }
                     self.map.visited[currGnome.x][currGnome.y][player] += 1;
+                    if(self.buff[0] >= 1) {
+                        if(currGnome.x === 0 && currGnome.y === self.height - 1) {
+                            currGnome.vision *= 2;
+                            self.buff[0] -= 1;
+                        }
+                    }
+                    if(self.buff[1] >= 1) {
+                        if(currGnome.x === self.width - 1 && currGnome.y === 0) {
+                            currGnome.vision *= 2;
+                            self.buff[1] -= 1;
+                        }
+                    }
                     updateGnome(player, i, currGnome);
                     updateMap({
                         x: currGnome.x,
@@ -222,7 +248,7 @@ function Game() {
                     });
                 }
             }
-            self.update();
+            self.update_con();
         }
         postMessage({
             type: 'query'

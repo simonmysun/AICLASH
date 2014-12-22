@@ -96,7 +96,7 @@ function Painter(canvas, game, delay) {
             paintCell(c.x, c.y);
             k -- ;
         }
-        requestAnimFrame(render);
+        requestAnimationFrame(render);
     };
     render();
 }

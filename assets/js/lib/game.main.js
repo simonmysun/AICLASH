@@ -59,28 +59,24 @@ var Game = function() {
             if(data.type === 'update gnome') {
                 self.gnomes[data.playerId][data.gnomeId].x = data.data.x;
                 self.gnomes[data.playerId][data.gnomeId].y = data.data.y;
-                self.gnomes[data.playerId][data.gnomeId].vision = data.data.x || self.gnomes[data.playerId][data.gnomeId].vision;
+                self.gnomes[data.playerId][data.gnomeId].vision = data.data.vision;
             }
             if(data.type === 'query') {
                 stats.end();
                 stats.begin();
-                var doSth = function() {
-                    if(typeof data.id === 'number') {
-                        playerWorkerList[data.id].postMessage({
+                if(typeof data.id === 'number') {
+                    playerWorkerList[data.id].postMessage({
+                        type: 'query'
+                    }, self.updateInfo(data.id));
+                } else {
+                    for(var i = 0; i < self.playerNum; i ++ ) {
+                        var buf = self.updateInfo(i);
+                        playerWorkerList[i].postMessage({
                             type: 'query',
-                            game: self.limitedMap(data.id)
+                            buf: buf
                         });
-                    } else {
-                        for(var i = 0; i < self.playerNum; i ++ ) {
-                            playerWorkerList[i].postMessage({
-                                type: 'query',
-                                game: self.limitedMap(i)
-                            });
-                        }
                     }
-                };
-                //setTimeout(doSth, self.delay);
-                doSth();
+                }
             }
             if(data.type === 'wait') {
                 self.wait ++ ;
@@ -91,42 +87,38 @@ var Game = function() {
         };
         self.wait -- ;
     };
-    self.limitedMap = function(player) {
-        var game = {};
-        game.width = self.width;
-        game.height = self.height;
-        game.gnomes = [];
-        game.map = {};
-        game.map.data = [];
-        game.map.visited = [];
+    self.updateInfo = function(player) {
+        var buf = [];
         for(var i = 0; i < self.gnomeNum; i ++ ) {
             var locX = self.gnomes[player][i].x;
             var locY = self.gnomes[player][i].y;
             var vision = self.gnomes[player][i].vision;
-            //vision = 2; //FIXME
-            game.gnomes[i] = {
+            buf.push({
+                type: 'gnome',
+                id: i,
                 x: locX,
                 y: locY,
                 vision: vision
-            };
-            for(var j = locX - vision; j < locX + vision; j ++ ) {
-                for(var k = locY - vision; k < locY + vision; k ++ ) {
-                    if(j < 0 || j > self.width - 1 || k < 0 || k > self.width - 1) {
+            });
+            for(var j = locX - vision - 1; j < locX + vision + 1; j ++ ) {
+                for(var k = locY - vision - 1; k < locY + vision + 1; k ++ ) {
+                    if(j < 0 || j > self.width - 1 || k < 0 || k > self.height - 1) {
                         continue;
                     }
                     if(Math.abs(j - locX) + Math.abs(k - locY) > vision) {
                         continue;
                     }
-                    if(typeof game.map.data[j] != 'object') {
-                        game.map.data[j] = [];
-                        game.map.visited[j] = [];
-                    }
-                    game.map.data[j][k] = self.map.data[j][k];
-                    game.map.visited[j][k] = self.map.visited[j][k];
+                    buf.push({
+                        type: 'map',
+                        x: j,
+                        y: k,
+                        data: self.map.data[j][k],
+                        visited: self.map.visited[j][k][player ^ 1]
+                    });
                 }
             }
         }
-        return game;
+        return buf;
     }
     self.resetWorkers = function() {
         self.gameWorker.terminate();
@@ -163,7 +155,9 @@ var Game = function() {
             var src = 'data:text/javascript;base64,' + Base64.encode(playerScripts[player]);
             worker.postMessage({
                 type: 'init',
-                src: src
+                src: src, 
+                width: self.width, 
+                height: self.height
             });
             var gm = self.gameWorker;
             var onmessage = function(sdata) {
@@ -207,3 +201,7 @@ var Game = function() {
     };
     return self;
 };
+
+window.onerror = function(msg,url,line){
+   alert(msg,url,line);
+}

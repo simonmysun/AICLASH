@@ -16,4 +16,4 @@ var deepClone = function(obj) {
     } else {
         return obj;
     }
-}
+};
