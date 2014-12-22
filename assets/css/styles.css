@@ -217,3 +217,7 @@
     background-size: cover;
     background-attachment: fixed;
 }
+
+footer {
+    margin: 20px auto;
+}
