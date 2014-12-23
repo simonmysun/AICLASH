@@ -3,10 +3,12 @@ AICLASH
 
 AIClash is clashing live AIs safely &amp; harmoniously. 
 
+http://simonmysun.github.io/AICLASH/
+
 ## Usage
 
 ### To play this 'game'
-Go to [the sandbox page](http://simonmysun.github.io/AIClASH/sandbox) and write code. 
+Go to [the sandbox page](http://simonmysun.github.io/AICLASH/sandbox) and write code. 
 
 ### To deploy this platform
 This paragraph is tranlated and compiled from [here](https://github.com/fex-team/fex-team.github.io/blob/master/README.md). This is an instruction of this repository. To learn how to write AI code, please visit [AICLASH/Introducion](http://simonmysun.github.io/AICLASH/intro/) and [AICLASH/API Reference](http://simonmysun.github.io/AICLASH/api/)
