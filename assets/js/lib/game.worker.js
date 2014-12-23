@@ -110,7 +110,10 @@ function Game() {
         self.reduce = function(data) {
             if(self.signal >= 1) {
                 self.signal -= 1;
-                currAction[data.playerId] = data.action;
+                currAction.push({
+                    id: data.playerId, 
+                    action: data.action
+                });
                 if(self.signal <= 0) {
                     self.callback();
                 }
@@ -128,10 +131,11 @@ function Game() {
     self.update = function() {
         var callback0 = function() {
             var callback = function() {
-                for(var player in currAction) {
+                for(var k in currAction) {
+                    var player = currAction[k].id;
                     for(var i = 0; i < 3; i ++ ) {
-                        var currGnome = self.gnomes[player][i];
-                        var action = parseInt(currAction[player][i]);
+                        var currGnome = self.gnomes[currAction[k].id][i];
+                        var action = parseInt(currAction[k].action[i]);
                         var availableActions = [];
                         var actionAvailable = false;
                         for(var j = 1; j < 16; j *= 2) {
@@ -182,6 +186,7 @@ function Game() {
                 }
                 self.update();
             }
+            currAction = [];
             postMessage({
                 type: 'query',
                 id: 1
@@ -189,6 +194,7 @@ function Game() {
             self.reduceAction.init(1, callback);
         }
         self.reduceAction.init(1, callback0);
+        currAction = [];
         postMessage({
             type: 'query',
             id: 0
@@ -196,10 +202,11 @@ function Game() {
     };
     self.update_con = function() {
         var callback = function() {
-            for(var player in currAction) {
+            for(var k in currAction) {
+                var player = currAction[k].id;
                 for(var i = 0; i < 3; i ++ ) {
-                    var currGnome = self.gnomes[player][i];
-                    var action = parseInt(currAction[player][i]);
+                    var currGnome = self.gnomes[currAction[k].id][i];
+                    var action = parseInt(currAction[k].action[i]);
                     var availableActions = [];
                     var actionAvailable = false;
                     for(var j = 1; j < 16; j *= 2) {
@@ -250,6 +257,7 @@ function Game() {
             }
             self.update_con();
         }
+        currAction = [];
         postMessage({
             type: 'query'
         });
