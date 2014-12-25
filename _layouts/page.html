@@ -19,8 +19,14 @@ layout: default
 </div>
 <div class="">
   <div class="container">
-    <h1>{{ page.title }}</h1>
-    {{ content }}
+    <div class="row">
+      <div class="col-lg-10 col-md-9 col-sm-8 col-xs-12">
+        <h1>{{ page.title }}</h1>
+        {{ content }}
+      </div>
+      <div class="col-lg-2 col-md-3 col-sm-4 col-xs-12">
+        {% include sidebar.html %}
+      </div>
   </div>
 </div>
 {% include footer.html %}
