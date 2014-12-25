@@ -63,7 +63,12 @@ title: AIClash 评测平台介绍
 
 ### 运行机制
 
-每一个 tick 双方的代码会被调用一次, 给出包含地图, 自己队伍地精状态的数据, 并要求返回一个操作数组. 游戏后台会检查操作数组并根据其中的指令操作地精向指定方向前进一步, 若选手给出的操作指令不合法(比如向不连通的方向前进或给出的操作不符合规范), 对应的地精会随机走向一个可用的方向. 随后会标记访问状态数组, 检查是否有 buff 被触发, 检查游戏是否结束(开发版不会检查结束). 
+* 每一个 tick 双方的代码会被调用一次, 给出包含地图, 自己队伍地精状态的数据, 并要求返回一个操作数组; 
+* 游戏后台会检查操作数组并根据其中的指令操作地精向指定方向前进一步, 若选手给出的操作指令不合法(比如向不连通的方向前进或给出的操作不符合规范), 对应的地精会随机走向一个可用的方向; 
+* 从调用到收到返回的结果的时间将累计计入这一方的用时; 
+* 若一方累计用时超过 300 秒, 则不再调用选手的函数该队伍所有地精将进入随机游走状态; 
+* 随后会标记访问状态数组, 检查是否有 buff 被触发, 检查游戏是否结束(开发版不会检查结束); 
+* 重复此步骤直至终止条件被满足. 
 
 ### 起始状态和终止条件
 
@@ -72,11 +77,11 @@ title: AIClash 评测平台介绍
 当以下条件之一被满足时, 游戏结束(开发版并未设置此判断): 
 
 * 有任一方地精到达另一方起点时; 
-* 游戏时间超过 600 秒; 
+* 双方均已超时. 
 
 ### 胜负判定
 
-若游戏结束时, 仅有一方达到另一方起点, 则达到起点所在的玩家赢的比赛, 否则为平局. 
+若游戏结束时, 有且仅有一方达到另一方起点, 则达到起点所在的玩家赢的比赛, 否则为平局. 
 
 ### 积分制度
 
@@ -135,4 +140,4 @@ Code of participant are all data that can be downloaded from the website.
 
 你可以用这些代码在本网站上运行, 也可以缓存或在本地储存. 但除非原作者(们)许可, 你不能出于任何目的修改或重新发布这些代码. 为了本地测试和实验, 你可以使用你自己修改的而非其他人修改的任何版本的 AIClash. 
 
-You may use the code to play the original Snake-AI as served from this website, and you may cache or copy it locally. However, you may not modify or redistribute the code for any purpose unless you have a separate license from the owner(s) to do so. To enable local testing and experimenting, you may use the code with versions of AIClash that you yourself have modified, but not if the modifications were made by someone else.
+You may use the code to play the original AICLASH as served from this website, and you may cache or copy it locally. However, you may not modify or redistribute the code for any purpose unless you have a separate license from the owner(s) to do so. To enable local testing and experimenting, you may use the code with versions of AIClash that you yourself have modified, but not if the modifications were made by someone else.
