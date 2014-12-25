@@ -45,6 +45,7 @@ requirejs([], function() {
                     } else {
                         game.running = 0;
                         game.init();
+                        game.resetMap();
                     }
                     $(this).toggleClass('btn-success').toggleClass('btn-danger').toggleClass('text-stop').toggleClass('text-run').find('span').toggleClass('glyphicon-play').toggleClass('glyphicon-stop');
                 }

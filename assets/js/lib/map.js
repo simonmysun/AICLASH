@@ -108,6 +108,9 @@ var Map = function(width, height) {
         return edgeList;
     };
     self.generate = function(method, passRate) {
+        postMessage({
+            type: 'wait'
+        });
         if(method === 'random kruskal') {
             var edgeList = self.edgeList();
             var set = new Set(self.width * self.height);
@@ -146,6 +149,11 @@ var Map = function(width, height) {
                     }
                     if(edgeList.length > 0) {
                         setTimeout(process, 10);
+                    }
+                    else {
+                        postMessage({
+                            type: 'done'
+                        });
                     }
                 }
             }
