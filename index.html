@@ -2,59 +2,122 @@
 layout: default
 title: Home
 ---
-<div class="jumbotron homepage">
-  <div class="container">
-    <div class="homepage-box">
-      <h1>AIClash</h1>
-      <p>AIClash is clashing live AIs safely & harmoniously. </p>
-      <p><a class="btn btn-primary btn-lg" href="{{ site.baseurl }}/sandbox/" role="button">Start now</a></p>
+<div id="homepage-content">
+  <div class="jumbotron fs-container">
+    <div class="fs-table">
+      <div class="fs-table-cell">
+        <div class="container homepage-box">
+          <h1>AIClash</h1>
+          <p>AIClash is clashing live AIs safely & harmoniously. </p>
+          <p><a class="btn btn-primary btn-lg" href="{{ site.baseurl }}/sandbox/" role="button">Start now</a></p>
+        </div>
+      </div>
     </div>
   </div>
-</div>
-<div class="homepage-next">
-  <a>
-    <div>
-      <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
-    </div>
-  </a>
-</div>
-<div class="blog">
-  <div class="container">
-<div class="">
-<h1>Blog</h1>
+  {% include next-btn.html %}
+  <div class="fs-container">
+    <div class="fs-table">
+      <div class="fs-table-cell">
+        <div class="container blog">
+          <h1>Blog</h1>
 {% for rpost in paginator.posts %}
-  <div class="">
-    <h2 class=""><a href="{{ site.baseurl }}{{ rpost.url }}" title="{{ rpost.title }}">{{ rpost.title }}</a></h2>
-    <p class=""><time pubdate="{{ rpost.date }}">{{ rpost.date | date_to_string }}</time></p>
-<!--
-    <p class="">{{ rpost.content | truncatewords:3 }}</p>
--->
-  </div>
+          <div class="">
+            <h2 class=""><a href="{{ site.baseurl }}{{ rpost.url }}" title="{{ rpost.title }}">{{ rpost.title }}</a></h2>
+            <p class=""><time pubdate="{{ rpost.date }}">{{ rpost.date | date_to_string }}</time></p>
+            <!--
+                <p class="">{{ rpost.content | truncatewords:3 }}</p>
+                -->
+          </div>
 {% endfor %}
 {% if paginator.total_pages > 1 %}
-  <nav class="">
-    <ul class="pagination pagination-lg">
-      <li class="{% if paginator.page == 1 %} disabled{% endif %}"><a href="{% if paginator.page == 1 %}javascript:void(0);{% else %}{{ site.baseurl }}/{%if paginator.page > 2 %}page{{ paginator.page |minus: 1 }}/{% endif %}{% endif %}"><span aria-hidden="true">&laquo;</span><span class="sr-only">Previous</span></a></li>
+          <nav class="">
+            <ul class="pagination pagination-lg">
+              <li class="{% if paginator.page == 1 %} disabled{% endif %}"><a href="{% if paginator.page == 1 %}javascript:void(0);{% else %}{{ site.baseurl }}/{%if paginator.page > 2 %}page{{ paginator.page |minus: 1 }}/{% endif %}{% endif %}"><span aria-hidden="true">&laquo;</span><span class="sr-only">Previous</span></a></li>
   {% for page in (1..paginator.total_pages) %}
     {% if page == paginator.page %}
-      <li class=""><a href="javascript:void(0);">{{ page }}</a></li>
+              <li class=""><a href="javascript:void(0);">{{ page }}</a></li>
     {% else %}
-      <li><a href="{{ site.baseurl }}/{%if page != 1 %}page{{ page }}/{% endif %}">{{ page }}</a></li>
+              <li><a href="{{ site.baseurl }}/{%if page != 1 %}page{{ page }}/{% endif %}">{{ page }}</a></li>
     {% endif %}
   {% endfor %}
-      <li class="{% if paginator.page == paginator.total_pages %} disabled{% endif %}"><a href="{% if paginator.page == paginator.total_pages %}javascript:void(0);{% else %}{{ site.baseurl }}/page{{ paginator.page |plus: 1 }}/{% endif %}"><span aria-hidden="true">&raquo;</span><span class="sr-only">Next</span></a></li>
-    </ul>
-  </nav>
+              <li class="{% if paginator.page == paginator.total_pages %} disabled{% endif %}"><a href="{% if paginator.page == paginator.total_pages %}javascript:void(0);{% else %}{{ site.baseurl }}/page{{ paginator.page |plus: 1 }}/{% endif %}"><span aria-hidden="true">&raquo;</span><span class="sr-only">Next</span></a></li>
+            </ul>
+          </nav>
 {% endif %}
-</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% include next-btn.html %}
+  <div class="fs-container">
+    <div class="fs-table">
+      <div class="fs-table-cell">
+        <div class="container features">
+          <div class="row">
+            <div class="col-md-5">
+            </div>
+            <div class="col-md-7">
+              <h2>Simple rules <small>just like a kids' maze. </small></h2>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. </p>
+              <p><a class="btn btn-primary btn-lg" href="{{ site.baseurl }}/intro/" role="button">More rules</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% include next-btn.html %}
+  <div class="fs-container">
+    <div class="fs-table">
+    <div class="fs-table-cell">
+      <div class="container features">
+        <div class="row">
+          <div class="col-md-7">
+            <h2>Easy to learn <small>clean and tidy documents. </small></h2>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. </p>
+            <p><a class="btn btn-primary btn-lg" href="{{ site.baseurl }}/api/" role="button">View API references</a></p>
+          </div>
+          <div class="col-md-5">
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+  {% include next-btn.html %}
+  <div class="fs-container">
+    <div class="fs-table">
+      <div class="fs-table-cell">
+        <div class="container features">
+          <div class="row">
+            <div class="col-md-5">
+            </div>
+            <div class="col-md-7">
+              <h2>Convinient to develop <small>code and view at the same time. </small></h2>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. </p>
+              <p><a class="btn btn-primary btn-lg" href="{{ site.baseurl }}/sandbox/" role="button">Have a try</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% include next-btn.html %}
+  <div class="fs-container">
+    <div class="fs-table">
+      <div class="fs-table-cell">
+        <div class="container features">
+          <div class="row">
+            <div class="col-md-7">
+              <h2>Designed for education <small>to learn basic artificial intellegence. </small></h2>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. </p>
+            </div>
+            <div class="col-md-5">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
-<div class="homepage-next">
-  <a>
-    <div>
-      <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
-    </div>
-  </a>
-</div>
-
 {% include footer.html %}
