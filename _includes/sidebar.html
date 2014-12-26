@@ -1,0 +1,6 @@
+<h4>Recent Posts</h4>
+{% for rpost in site.posts %}
+        <div class="">
+          <h5 class=""><a href="{{ site.baseurl }}{{ rpost.url }}" title="{{ rpost.title }}">{{ rpost.title }}</a></h5>
+        </div>
+{% endfor %}
