@@ -74,8 +74,8 @@ function Game() {
         self.height = height;
         self.map = new Map(self.width, self.height);
         self.map.init();
-        self.map.visited[0][0][0] = 1000;
-        self.map.visited[game.width - 1][game.height - 1][1] = 1000;
+        self.map.visited[0][0][0] = 3;
+        self.map.visited[game.width - 1][game.height - 1][1] = 3;
         self.map.generate(method);
         self.gnomeNum = 3;
         self.playerNum = 2;
@@ -147,7 +147,7 @@ function Game() {
                             }
                         }
                         if(actionAvailable === false) {
-                            console.log('Action unavailable. ');
+                            //console.log('Action unavailable. ');
                             action = availableActions[Math.floor(Math.random() * availableActions.length)];
                         }
                         if(action === 1) {
@@ -218,7 +218,7 @@ function Game() {
                         }
                     }
                     if(actionAvailable === false) {
-                        console.log('Action unavailable. ');
+                        //console.log('Action unavailable. ');
                         action = availableActions[Math.floor(Math.random() * availableActions.length)];
                     }
                     if(action === 1) {

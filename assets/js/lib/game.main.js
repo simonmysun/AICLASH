@@ -125,6 +125,7 @@ var Game = function() {
         for(var w in playerWorkerList) {
             playerWorkerList[w].terminate();
         }
+        playerWorkerList = [];
     };
     self.resetMap = function() {
         self.wait ++ ;
