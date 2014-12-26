@@ -168,17 +168,8 @@
     content: "Stop"
 }
 
-.homepage, .homepage>.container {
-    height: 100%;
-}
-
-.homepage h1, .homepage p:first-of-type {
+.homepage-box h1, .homepage-box p:first-of-type {
     text-shadow: 1px 1px 1px #fff;
-}
-
-.homepage .homepage-box {
-    position: absolute;
-    bottom: 100px;
 }
 
 .homepage-next {
@@ -206,9 +197,29 @@
     background: #fff;
 }
 
+.fs-container {
+    height: 16.666666666666666666%;
+    padding: 0;
+}
+
+.fs-table {
+    display: table;
+    height: 100%;
+    width: 100%;
+}
+
+.fs-table-cell {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.features {
+    font-size: 120%;
+}
+
 .blog {
-    padding: 48px 0;
-    margin-bottom: 30px;
+    max-height: 95%;
+    overflow: auto;
 }
 
 .jumbotron {
@@ -216,6 +227,52 @@
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
+    margin-bottom: 0;
+    box-shadow: 0 0 15px;
+}
+
+#homepage-content {
+    height: 600%;
+}
+
+.fs-container:nth-of-type(1) {
+    z-index: 100;
+}
+
+.fs-container:nth-of-type(3) {
+    background: #ddd;
+    box-shadow: 0 0 50px #555 inset;
+    z-index: 90;
+}
+
+.fs-container:nth-of-type(5) {
+    background-image: url(../img/rules-bg.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    text-shadow: 0 0 2px white;
+    z-index: 80;
+}
+
+.fs-container:nth-of-type(7) {
+    background: #fff;
+    box-shadow: 0 0 50px #555 inset;
+    z-index: 70;
+}
+
+.fs-container:nth-of-type(9) {
+    background-image: url(../img/editor-bg.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    z-index: 60;
+    color: white;
+    text-shadow: 0 0 2px black;
+}
+
+.fs-container:nth-of-type(11) {
+    background: #fff;
+    z-index: 50;
 }
 
 footer {
