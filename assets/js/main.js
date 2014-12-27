@@ -38,6 +38,7 @@ requirejs([], function() {
             });
             $('#btn-run').click(function() {
                 if(game.wait == 0) {
+                    console.log(new Date());
                     if(game.running === 0) {
                         game.setScript(0, editors[0].getValue());
                         game.setScript(1, editors[1].getValue());
