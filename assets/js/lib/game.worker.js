@@ -9,7 +9,7 @@ onmessage = function(sdata) {
     } else if(data.type === 'reset') {
         game = new Game();
     } else if(data.type === 'start') {
-        game.update_con();
+        game.update();
     } else if(data.type === 'action') {
         game.reduceAction.reduce(data);
     }
@@ -129,8 +129,14 @@ function Game() {
         }
     };
     self.update = function() {
-        var callback0 = function() {
-            var callback = function() {
+        currAction = [];
+        var randomQuery = Math.floor(Math.random() * 2);
+        self.reduceAction.init(1, function() {
+            postMessage({
+                type: 'query',
+                id: randomQuery
+            });
+            self.reduceAction.init(1, function() {
                 for(var k in currAction) {
                     var player = currAction[k].id;
                     for(var i = 0; i < 3; i ++ ) {
@@ -185,23 +191,19 @@ function Game() {
                     }
                 }
                 self.update();
-            }
-            currAction = [];
-            postMessage({
-                type: 'query',
-                id: 1
             });
-            self.reduceAction.init(1, callback);
-        }
-        self.reduceAction.init(1, callback0);
-        currAction = [];
+        });
         postMessage({
             type: 'query',
-            id: 0
+            id: randomQuery ^ 1
         });
     };
     self.update_con = function() {
-        var callback = function() {
+        currAction = [];
+        postMessage({
+            type: 'query'
+        });
+        self.reduceAction.init(2, function() {
             for(var k in currAction) {
                 var player = currAction[k].id;
                 for(var i = 0; i < 3; i ++ ) {
@@ -256,12 +258,7 @@ function Game() {
                 }
             }
             self.update_con();
-        }
-        currAction = [];
-        postMessage({
-            type: 'query'
         });
-        self.reduceAction.init(2, callback);
     };
     return self;
 }
