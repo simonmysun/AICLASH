@@ -2,13 +2,15 @@
 var Game = function() {
     var self = this;
     self.gameWorker = {terminate: function() {}};
-    self.width = 200;
-    self.height = 150;
+    self.width = 100;
+    self.height = 75;
     self.playerNum = 2;
     self.gnomeNum = 3;
     self.wait = 0;
     self.running = 0;
+    self.timeLimit = 300 * 1000;
     self.delay = 0;
+    self.started = 0;
     var playerWorkerList = [];
     var playerScripts = [];
     self.init = function() {
@@ -48,6 +50,7 @@ var Game = function() {
             gnome.vision = 15;
             self.gnomes[1].push(gnome);
         }
+        self.timeoutPlayers = 0;
         self.gameWorker = new Worker('./../assets/js/lib/game.worker.js');
         self.gameWorker.onmessage = function(sdata) {
             var data = sdata.data;
@@ -64,17 +67,35 @@ var Game = function() {
             if(data.type === 'query') {
                 stats.end();
                 stats.begin();
+                var buf = [];
+                for(var i = 0; i < self.playerNum; i++ ) {
+                    buf[i] = self.updateInfo(i);
+                }
                 if(typeof data.id === 'number') {
-                    playerWorkerList[data.id].postMessage({
-                        type: 'query'
-                    }, self.updateInfo(data.id));
+                    var worker = playerWorkerList[data.id];
+                    if(worker.time > 0) {
+                        worker.timer = setTimeout(worker.fn, worker.time);
+                        worker.timeStamp = new Date();
+                        worker.postMessage({
+                            type: 'query',
+                            buf: buf[data.id]
+                        });
+                    } else {
+                            worker.fn();
+                    }
                 } else {
                     for(var i = 0; i < self.playerNum; i ++ ) {
-                        var buf = self.updateInfo(i);
-                        playerWorkerList[i].postMessage({
-                            type: 'query',
-                            buf: buf
-                        });
+                        var worker = playerWorkerList[i];
+                        if(worker.time > 0) {
+                            worker.timer = setTimeout(worker.fn, worker.time);
+                            worker.timeStamp = new Date();
+                            worker.postMessage({
+                                type: 'query',
+                                buf: buf[i]
+                            });
+                        } else {
+                            worker.fn();
+                        }
                     }
                 }
             }
@@ -147,23 +168,67 @@ var Game = function() {
     self.setScript = function(player, script) {
         playerScripts[player] = script;
     };
+tttt = 0;
+    self.playerWorkerTimeout = function(id) {
+        //console.log('Player ' + id + ' time out. ');
+        var worker = playerWorkerList[id];
+        worker.time = 0;
+        clearTimeout(worker.timer);
+        if(tttt === 0) {
+            console.log(playerWorkerList[0].time, playerWorkerList[1].time);
+            tttt = 1;
+        }
+        if(playerWorkerList[0].time <= 0 && playerWorkerList[1].time <= 0) {
+            alert('Game over: both time out');
+            $('#btn-run').click();
+        } else {
+            worker.terminate();
+            self.gameWorker.postMessage({
+                type: 'action',
+                playerId: id,
+                action: [
+                    0,
+                    0,
+                    0
+                ]
+            });
+        }
+    }
     self.run = function() {
         self.running = 1;
+        self.started = 0;
         for(var player = 0; player < self.playerNum; player ++ ) {
             var worker = new Worker('./../assets/js/lib/worker.js');
             var id = player;
+            worker.done = 0;
             worker.id = player;
-            var src = 'data:text/javascript;base64,' + Base64.encode(playerScripts[player]);
+            worker.time = self.timeLimit;
+            worker.timeStamp = 0;
+            worker.timer = 0;
+            var src = 'data:text/javascript;base64,' + Base64.encode(playerScripts[player] + ';;postMessage({type:"done"});');
+            //worker.fn = 'game.playerWorkerTimeout(' + worker.id + ');';
+            worker.fn = (function (wid) {
+                return function () {
+                    game.playerWorkerTimeout(wid);
+                };
+            })(worker.id);
+/*            (function (wid) {
+                return setTimeout(function () {
+                    game.playerWorkerTimeout(wid);
+                }, worker.time);
+            })(worker.id);*/
+            worker.timer = setTimeout(worker.fn, worker.time);
+            worker.timeStamp = new Date();
             worker.postMessage({
                 type: 'init',
-                src: src, 
-                width: self.width, 
+                src: src,
+                width: self.width,
                 height: self.height
             });
             var gm = self.gameWorker;
             var onmessage = function(sdata) {
                 var data = sdata.data;
-                if(data.type = 'action') {
+                if(data.type === 'action') {
                     if(typeof data.action === 'object') {
                         gm.postMessage({
                             type: 'action',
@@ -177,14 +242,25 @@ var Game = function() {
                     } else {
                         gm.postMessage({
                             type: 'action',
-                            playerId: id,
+                            playerId: this.id,
                             action: [
                                 0, 
                                 0, 
                                 0
                             ]
                         });
-                        
+                    }
+                    this.time -= new Date() - this.timeStamp;
+                    clearTimeout(this.timer);
+                } else if(data.type === 'done') {
+                    this.time -= new Date() - this.timeStamp;
+                    clearTimeout(this.timer);
+                    this.done = 1;
+                    if(playerWorkerList[0].done === 1 && playerWorkerList[1].done === 1 && game.started === 0) {
+                        self.gameWorker.postMessage({
+                            type: 'start',
+                        });
+                        self.started = 1;
                     }
                 }
             };
@@ -196,9 +272,6 @@ var Game = function() {
             };
             playerWorkerList = playerWorkerList.concat(worker);
         }
-        self.gameWorker.postMessage({
-            type: 'start',
-        });
     };
     return self;
 };
