@@ -15,7 +15,7 @@ title: AIClash 评测平台介绍
 
 ### 地图
 
-游戏地图为一个 `200 × 150` 的格子网络. 每个格子(cell)与其上, 下, 左, 右可以有连接, 其中处在边界上的格子在边界外方向上无连接. 地图由随机的 Kruskal 算法生成, 源码见[此处]({{ site.baseurl }}/assets/js/lib/map.js). 
+游戏地图为一个 `100 × 75` 的格子网络. 每个格子(cell)与其上, 下, 左, 右可以有连接, 其中处在边界上的格子在边界外方向上无连接. 地图由随机的 Kruskal 算法生成, 源码见[此处]({{ site.baseurl }}/assets/js/lib/map.js). 
 
 在游戏中连接状态用一个数字表示. 
 设 `c` 为一个格子: 
@@ -76,7 +76,7 @@ title: AIClash 评测平台介绍
 
 当以下条件之一被满足时, 游戏结束(开发版并未设置此判断): 
 
-* 有任一方地精到达另一方起点时; 
+* 有任一方的一个或以上地精到达另一方起点时; 
 * 双方均已超时. 
 
 ### 胜负判定
@@ -86,6 +86,8 @@ title: AIClash 评测平台介绍
 ### 积分制度
 
 比赛将采用[等级分制度](http://en.wikipedia.org/wiki/Elo_rating_system)积分, 最终将生成排名结果返回给主办方处理. 
+
+其中初始 ELO Rating 为 1500, K 为 15, 比赛顺序为随机
 
 ## 参赛入门
 
@@ -115,9 +117,9 @@ title: AIClash 评测平台介绍
 
 ### 调试
 
-由于我们的评测平台在线版本使用 web worker 机制防止选手作弊, 所以调试时需要在 Chrome 中打开 worker 调试面板, [这里](http://www.nczonline.net/blog/2009/08/25/web-workers-errors-and-debugging/)和[这里](http://blog.csdn.net/donghao526/article/details/9664701)讲述了 web worker 中代码的调试方法. 
+由于我们的评测平台在线版本使用 web worker 机制防止选手作弊, [这里](http://www.nczonline.net/blog/2009/08/25/web-workers-errors-and-debugging/)和[这里](http://blog.csdn.net/donghao526/article/details/9664701)讲述了 web worker 中代码的调试方法. 
 
-调试时打开 Chrome 开发者工具, 装载代码(点击 `Load` )完毕后, 在 `Sources` 标签中的右侧点击 `Workers` 打开 Web Worker 调试窗口, 这里的 `Source` 标签中, `(no domain)` 下的代码即为调试选手提交的脚本. 
+调试时打开 Chrome 开发者工具, 点击 `Start` 之后, 在开发者工具中的 `Sources` 标签里, `(no domain)` 下的代码即为调试选手提交的脚本. 
 
 _注意: 每次装载都会产生新的 Web Worker 线程, 需要重新打开 Web Worker 调试窗口. _
 
