@@ -56,12 +56,6 @@ var gnomeTurnRight = function(dir) {
     return dir;
 }
 
-var directions = [];
-directions[1] = 1;
-directions[2] = 2;
-directions[4] = 4;
-directions[8] = 8;
-
 function Game() {
     var self = this;
     var signal;

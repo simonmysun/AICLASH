@@ -75,7 +75,7 @@ var Game = function() {
                     var worker = playerWorkerList[data.id];
                     if(worker.time > 0) {
                         worker.timer = setTimeout(worker.fn, worker.time);
-                        worker.timeStamp = new Date();
+                        worker.timeStamp = performance.now();
                         worker.postMessage({
                             type: 'query',
                             buf: buf[data.id]
@@ -88,7 +88,7 @@ var Game = function() {
                         var worker = playerWorkerList[i];
                         if(worker.time > 0) {
                             worker.timer = setTimeout(worker.fn, worker.time);
-                            worker.timeStamp = new Date();
+                            worker.timeStamp = performance.now();
                             worker.postMessage({
                                 type: 'query',
                                 buf: buf[i]
@@ -168,19 +168,22 @@ var Game = function() {
     self.setScript = function(player, script) {
         playerScripts[player] = script;
     };
-tttt = 0;
+//tttt = 0;
     self.playerWorkerTimeout = function(id) {
-        //console.log('Player ' + id + ' time out. ');
         var worker = playerWorkerList[id];
         worker.time = 0;
         clearTimeout(worker.timer);
-        if(tttt === 0) {
-            console.log(playerWorkerList[0].time, playerWorkerList[1].time);
-            tttt = 1;
-        }
+//        if(tttt === 0) {
+            //console.log(playerWorkerList[0].time, playerWorkerList[1].time);
+//            tttt = 1;
+//        }
         if(playerWorkerList[0].time <= 0 && playerWorkerList[1].time <= 0) {
-            alert('Game over: both time out');
+            //alert('Game over: both time out');
             $('#btn-run').click();
+//            setTimeout(function() {
+//                tttt = 0;
+//                $('#btn-run').click();
+//            }, 3000);
         } else {
             worker.terminate();
             self.gameWorker.postMessage({
@@ -206,19 +209,13 @@ tttt = 0;
             worker.timeStamp = 0;
             worker.timer = 0;
             var src = 'data:text/javascript;base64,' + Base64.encode(playerScripts[player] + ';;postMessage({type:"done"});');
-            //worker.fn = 'game.playerWorkerTimeout(' + worker.id + ');';
             worker.fn = (function (wid) {
                 return function () {
                     game.playerWorkerTimeout(wid);
                 };
             })(worker.id);
-/*            (function (wid) {
-                return setTimeout(function () {
-                    game.playerWorkerTimeout(wid);
-                }, worker.time);
-            })(worker.id);*/
             worker.timer = setTimeout(worker.fn, worker.time);
-            worker.timeStamp = new Date();
+            worker.timeStamp = performance.now();
             worker.postMessage({
                 type: 'init',
                 src: src,
@@ -232,7 +229,7 @@ tttt = 0;
                     if(typeof data.action === 'object') {
                         gm.postMessage({
                             type: 'action',
-                            playerId: this.id, // why?
+                            playerId: this.id,
                             action: [
                                 String(data.action[0]), 
                                 String(data.action[1]), 
@@ -250,10 +247,10 @@ tttt = 0;
                             ]
                         });
                     }
-                    this.time -= new Date() - this.timeStamp;
+                    this.time -= performance.now() - this.timeStamp;
                     clearTimeout(this.timer);
                 } else if(data.type === 'done') {
-                    this.time -= new Date() - this.timeStamp;
+                    this.time -= performance.now() - this.timeStamp;
                     clearTimeout(this.timer);
                     this.done = 1;
                     if(playerWorkerList[0].done === 1 && playerWorkerList[1].done === 1 && game.started === 0) {

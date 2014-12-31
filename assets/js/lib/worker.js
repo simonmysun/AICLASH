@@ -1,4 +1,24 @@
 importScripts('stdlib.js');
+
+["performance", "indexedDB", "webkitIndexedDB", "navigator", /*"console", */"onerror", "location", "self", "setTimeout", "clearTimeout", "setInterval", "clearInterval", "webkitRequestFileSystem", "webkitRequestFileSystemSync", "webkitResolveLocalFileSystemURL", "webkitResolveLocalFileSystemSyncURL", "addEventListener", "removeEventListener", "dispatchEvent", 'document', 'window', 'history', 'XMLHttpRequest', 'sessionStorage', 'localStorage', 'Notification', 'Worker', 'WebSocket'].map(function(x) {
+    this[x] = undefined;
+});
+
+navigator = null;
+XMLHttpRequest = null;
+onerror = null;
+onlanguagechange = null;
+onoffline = null;
+alert = null;
+//console = null;
+setTimeout = null;
+clearTimeout = null;
+setInterval = null;
+clearInterval = null;
+requestAnimationFrame = null;
+Worker = null;
+location = null;
+
 var game = {};
 
 onmessage = function(sdata) {
