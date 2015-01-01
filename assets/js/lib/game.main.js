@@ -76,6 +76,7 @@ var Game = function() {
                     if(worker.time > 0) {
                         worker.timer = setTimeout(worker.fn, worker.time);
                         worker.timeStamp = performance.now();
+                        worker.done = 0;
                         worker.postMessage({
                             type: 'query',
                             buf: buf[data.id]
@@ -89,6 +90,7 @@ var Game = function() {
                         if(worker.time > 0) {
                             worker.timer = setTimeout(worker.fn, worker.time);
                             worker.timeStamp = performance.now();
+                            worker.done = 0;
                             worker.postMessage({
                                 type: 'query',
                                 buf: buf[i]
@@ -225,30 +227,33 @@ var Game = function() {
             var gm = self.gameWorker;
             var onmessage = function(sdata) {
                 var data = sdata.data;
-                if(data.type === 'action') {
-                    if(typeof data.action === 'object') {
-                        gm.postMessage({
-                            type: 'action',
-                            playerId: this.id,
-                            action: [
-                                String(data.action[0]), 
-                                String(data.action[1]), 
-                                String(data.action[2])
-                            ]
-                        });
-                    } else {
-                        gm.postMessage({
-                            type: 'action',
-                            playerId: this.id,
-                            action: [
-                                0, 
-                                0, 
-                                0
-                            ]
-                        });
+                if(worker.done !== 0) {
+                    worker.done = 0;
+                    if(data.type === 'action') {
+                        if(typeof data.action === 'object') {
+                            gm.postMessage({
+                                type: 'action',
+                                playerId: this.id,
+                                action: [
+                                    String(data.action[0]), 
+                                    String(data.action[1]), 
+                                    String(data.action[2])
+                                ]
+                            });
+                        } else {
+                            gm.postMessage({
+                                type: 'action',
+                                playerId: this.id,
+                                action: [
+                                    0, 
+                                    0, 
+                                    0
+                                ]
+                            });
+                        }
+                        this.time -= performance.now() - this.timeStamp;
+                        clearTimeout(this.timer);
                     }
-                    this.time -= performance.now() - this.timeStamp;
-                    clearTimeout(this.timer);
                 } else if(data.type === 'done') {
                     this.time -= performance.now() - this.timeStamp;
                     clearTimeout(this.timer);
