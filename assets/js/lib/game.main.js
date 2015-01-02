@@ -1,3 +1,11 @@
+if(!window.performance) {
+    window.performance = {
+        now: function() {
+            return new Date();
+        }
+    };
+}
+
 
 var Game = function() {
     var self = this;
