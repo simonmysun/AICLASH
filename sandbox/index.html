@@ -27,7 +27,20 @@ title: Sandbox
 </div>
 <div id="canvas-wrap">
   <div id="canvas-container">
-    <canvas id="canvas" width="798px" height="598px"></canvas>
+    <div class="fog-wrap">
+      <div class="fog-clip">
+        <div class="fog-wrap">
+        <canvas id="canvas" width="798px" height="598px"></canvas>
+        </div>
+      </div>
+      <svg width="0" height="0">
+        <defs>
+          <clipPath id="fog-clip-path">
+            <circle cx="600" cy="600" r="20"></circle>
+          </clipPath>
+        </defs>
+      </svg>
+    </div>
   </div>
 </div>
 
