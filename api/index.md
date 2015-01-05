@@ -16,10 +16,6 @@ title: AIClash 评测平台选手接口文档
 	Error: function Error() { [native code] }
 	EvalError: function EvalError() { [native code] }
 	EventSource: function EventSource() { [native code] }
-	FileError: function FileError() { [native code] }
-	FileException: function FileException() { [native code] }
-	FileReader: function FileReader() { [native code] }
-	FileReaderSync: function FileReaderSync() { [native code] }
 	Float32Array: function Float32Array() { [native code] }
 	Float64Array: function Float64Array() { [native code] }
 	Function: function Function() { [native code] }
@@ -39,9 +35,7 @@ title: AIClash 评测平台选手接口文档
 	TypeError: function TypeError() { [native code] }
 	URIError: function URIError() { [native code] }
 	URL: function URL() { [native code] }
-	WebSocket: function WebSocket() { [native code] }
 	WorkerLocation: function WorkerLocation() { [native code] }
-	XMLHttpRequest: function XMLHttpRequest() { [native code] }
 	addEventListener: function addEventListener() { [native code] }
 	close: function close() { [native code] }
 	constructor: function DedicatedWorkerContext() { [native code] }
