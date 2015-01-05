@@ -84,7 +84,7 @@ var Game = function() {
                     if(worker.time > 0) {
                         worker.timer = setTimeout(worker.fn, worker.time);
                         worker.timeStamp = performance.now();
-                        worker.done = 0;
+                        worker.done = 1;
                         worker.postMessage({
                             type: 'query',
                             buf: buf[data.id]
@@ -98,7 +98,7 @@ var Game = function() {
                         if(worker.time > 0) {
                             worker.timer = setTimeout(worker.fn, worker.time);
                             worker.timeStamp = performance.now();
-                            worker.done = 0;
+                            worker.done = 1;
                             worker.postMessage({
                                 type: 'query',
                                 buf: buf[i]
@@ -226,6 +226,7 @@ var Game = function() {
             })(worker.id);
             worker.timer = setTimeout(worker.fn, worker.time);
             worker.timeStamp = performance.now();
+            worker.done = 1;
             worker.postMessage({
                 type: 'init',
                 src: src,
@@ -235,8 +236,7 @@ var Game = function() {
             var gm = self.gameWorker;
             var onmessage = function(sdata) {
                 var data = sdata.data;
-                if(worker.done !== 0) {
-                    worker.done = 0;
+                if(worker.done > 0) {
                     if(data.type === 'action') {
                         if(typeof data.action === 'object') {
                             gm.postMessage({
@@ -261,16 +261,17 @@ var Game = function() {
                         }
                         this.time -= performance.now() - this.timeStamp;
                         clearTimeout(this.timer);
-                    }
-                } else if(data.type === 'done') {
-                    this.time -= performance.now() - this.timeStamp;
-                    clearTimeout(this.timer);
-                    this.done = 1;
-                    if(playerWorkerList[0].done === 1 && playerWorkerList[1].done === 1 && game.started === 0) {
-                        self.gameWorker.postMessage({
-                            type: 'start',
-                        });
-                        self.started = 1;
+                        this.done = 1;
+                    } else if(data.type === 'done') {
+                        this.time -= performance.now() - this.timeStamp;
+                        clearTimeout(this.timer);
+                        this.done = 1;
+                        if(playerWorkerList[0].done === 1 && playerWorkerList[1].done === 1 && game.started === 0) {
+                            self.gameWorker.postMessage({
+                                type: 'start',
+                            });
+                            self.started = 1;
+                        }
                     }
                 }
             };
