@@ -96,7 +96,8 @@ title: AIClash 评测平台选手接口文档
 	    'gnomes': [
 		{
 		    'x': 0, 
-		    'y': 0
+		    'y': 0, 
+                    'vision': 15
 		}, 
 		...
 	    ], 

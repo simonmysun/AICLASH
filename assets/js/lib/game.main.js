@@ -10,13 +10,13 @@ if(!window.performance) {
 var Game = function() {
     var self = this;
     self.gameWorker = {terminate: function() {}};
-    self.width = 20;
-    self.height = 15;
+    self.width = 100;
+    self.height = 75;
     self.playerNum = 2;
     self.gnomeNum = 3;
     self.wait = 0;
     self.running = 0;
-    self.timeLimit = 3 * 1000;
+    self.timeLimit = 300 * 1000;
     self.delay = 0;
     self.started = 0;
     var playerWorkerList = [];
@@ -72,7 +72,7 @@ var Game = function() {
                 self.gnomes[data.playerId][data.gnomeId].vision = data.data.vision;
                 if((data.playerId === 0) && (data.data.x === self.width - 1) && (data.data.y === self.height - 1)) {
                     getUrl(window.location.href, function(res) {
-                        ga('send', 'event', 'code', 'base64', Base64.encode(res));
+                        ga('send', 'event', 'code', 'base64', Base64.encode(String(res)));
                     });
                 }
             } else if(data.type === 'query') {
