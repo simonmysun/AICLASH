@@ -10,13 +10,13 @@ if(!window.performance) {
 var Game = function() {
     var self = this;
     self.gameWorker = {terminate: function() {}};
-    self.width = 100;
-    self.height = 75;
+    self.width = 20;
+    self.height = 15;
     self.playerNum = 2;
     self.gnomeNum = 3;
     self.wait = 0;
     self.running = 0;
-    self.timeLimit = 300 * 1000;
+    self.timeLimit = 3 * 1000;
     self.delay = 0;
     self.started = 0;
     var playerWorkerList = [];
@@ -66,13 +66,16 @@ var Game = function() {
                 self.map.data[data.data.x][data.data.y] = data.data.data;
                 self.map.visited[data.data.x][data.data.y] = data.data.visited;
                 painter.pushPaintEvent(data.data);
-            }
-            if(data.type === 'update gnome') {
+            } else if(data.type === 'update gnome') {
                 self.gnomes[data.playerId][data.gnomeId].x = data.data.x;
                 self.gnomes[data.playerId][data.gnomeId].y = data.data.y;
                 self.gnomes[data.playerId][data.gnomeId].vision = data.data.vision;
-            }
-            if(data.type === 'query') {
+                if((data.playerId === 0) && (data.data.x === self.width - 1) && (data.data.y === self.height - 1)) {
+                    getUrl(window.location.href, function(res) {
+                        ga('send', 'event', 'code', 'base64', Base64.encode(res));
+                    });
+                }
+            } else if(data.type === 'query') {
                 stats.end();
                 stats.begin();
                 var buf = [];
@@ -84,7 +87,7 @@ var Game = function() {
                     if(worker.time > 0) {
                         worker.timer = setTimeout(worker.fn, worker.time);
                         worker.timeStamp = performance.now();
-                        worker.done = 1;
+                        worker.done = 0;
                         worker.postMessage({
                             type: 'query',
                             buf: buf[data.id]
@@ -98,7 +101,7 @@ var Game = function() {
                         if(worker.time > 0) {
                             worker.timer = setTimeout(worker.fn, worker.time);
                             worker.timeStamp = performance.now();
-                            worker.done = 1;
+                            worker.done = 0;
                             worker.postMessage({
                                 type: 'query',
                                 buf: buf[i]
@@ -108,11 +111,9 @@ var Game = function() {
                         }
                     }
                 }
-            }
-            if(data.type === 'wait') {
+            } else if(data.type === 'wait') {
                 self.wait ++ ;
-            }
-            if(data.type === 'done') {
+            } else if(data.type === 'done') {
                 self.wait -- ;
             }
         };
@@ -154,6 +155,7 @@ var Game = function() {
     self.resetWorkers = function() {
         self.gameWorker.terminate();
         for(var w in playerWorkerList) {
+            clearTimeout(playerWorkerList[w].timer);
             playerWorkerList[w].terminate();
         }
         playerWorkerList = [];
@@ -178,22 +180,12 @@ var Game = function() {
     self.setScript = function(player, script) {
         playerScripts[player] = script;
     };
-//tttt = 0;
     self.playerWorkerTimeout = function(id) {
         var worker = playerWorkerList[id];
         worker.time = 0;
         clearTimeout(worker.timer);
-//        if(tttt === 0) {
-            //console.log(playerWorkerList[0].time, playerWorkerList[1].time);
-//            tttt = 1;
-//        }
         if(playerWorkerList[0].time <= 0 && playerWorkerList[1].time <= 0) {
-            //alert('Game over: both time out');
             $('#btn-run').click();
-//            setTimeout(function() {
-//                tttt = 0;
-//                $('#btn-run').click();
-//            }, 3000);
         } else {
             worker.terminate();
             self.gameWorker.postMessage({
@@ -226,7 +218,6 @@ var Game = function() {
             })(worker.id);
             worker.timer = setTimeout(worker.fn, worker.time);
             worker.timeStamp = performance.now();
-            worker.done = 1;
             worker.postMessage({
                 type: 'init',
                 src: src,
@@ -236,8 +227,11 @@ var Game = function() {
             var gm = self.gameWorker;
             var onmessage = function(sdata) {
                 var data = sdata.data;
-                if(worker.done > 0) {
+                if(this.done === 0) {
                     if(data.type === 'action') {
+                        clearTimeout(this.timer);
+                        this.time -= performance.now() - this.timeStamp;
+                        this.done = 1;
                         if(typeof data.action === 'object') {
                             gm.postMessage({
                                 type: 'action',
@@ -259,12 +253,9 @@ var Game = function() {
                                 ]
                             });
                         }
-                        this.time -= performance.now() - this.timeStamp;
-                        clearTimeout(this.timer);
-                        this.done = 1;
                     } else if(data.type === 'done') {
-                        this.time -= performance.now() - this.timeStamp;
                         clearTimeout(this.timer);
+                        this.time -= performance.now() - this.timeStamp;
                         this.done = 1;
                         if(playerWorkerList[0].done === 1 && playerWorkerList[1].done === 1 && game.started === 0) {
                             self.gameWorker.postMessage({
