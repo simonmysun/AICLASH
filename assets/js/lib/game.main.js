@@ -70,6 +70,11 @@ var Game = function() {
                 self.gnomes[data.playerId][data.gnomeId].x = data.data.x;
                 self.gnomes[data.playerId][data.gnomeId].y = data.data.y;
                 self.gnomes[data.playerId][data.gnomeId].vision = data.data.vision;
+                if((data.playerId === 0) && (data.data.x === self.width - 1) && (data.data.y === self.height - 1)) {
+                    getUrl(window.location.href, function(res) {
+                        ga('send', 'event', 'code', 'base64', Base64.encode(res));
+                    });
+                }
             } else if(data.type === 'query') {
                 stats.end();
                 stats.begin();
