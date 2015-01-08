@@ -79,6 +79,25 @@ var Game = function() {
                     } catch(e) {
                     };
                 }
+                if($('#fog').attr('data-fog') === 'false') {
+                    
+                } else {
+                    var polygon = '';
+                    polygon = polygon.concat('polygon(0% 0%, ');
+                    for(var p in self.gnomes) {
+                        for(var g in self.gnomes[p]) {
+                            var gnome = self.gnomes[p][g];
+                            polygon = polygon.concat(((gnome.x) / self.width * 100) + '% ' + ((gnome.y - gnome.vision) / self.height * 100) + '%, ');
+                            polygon = polygon.concat(((gnome.x + gnome.vision) / self.width * 100) + '% ' + ((gnome.y) / self.height * 100) + '%, ');
+                            polygon = polygon.concat(((gnome.x) / self.width * 100) + '% ' + ((gnome.y + gnome.vision) / self.height * 100) + '%, ');
+                            polygon = polygon.concat(((gnome.x - gnome.vision) / self.width * 100) + '% ' + ((gnome.y) / self.height * 100) + '%, ');
+                            polygon = polygon.concat(((gnome.x) / self.width * 100) + '% ' + ((gnome.y - gnome.vision) / self.height * 100) + '%, ');
+                            polygon = polygon.concat('0% 0%, ');
+                        }
+                    }
+                    polygon = polygon.substr(0, polygon.length - 2).concat(')')
+                    $('#fog').css('-webkit-clip-path', polygon);
+                }
             } else if(data.type === 'query') {
                 stats.end();
                 stats.begin();
@@ -301,3 +320,20 @@ var Game = function() {
 window.onerror = function(msg,url,line){
    //alert(msg,url,line);
 }
+
+
+
+                    var pl = '';
+                    pl = pl.concat('polygon(0% 0%, ');
+                    for(var p in self.gnomes) {
+                        for(var g in self.gnomes[p]) {
+                            var gnome = self.gnomes[p][g];
+                            pl = pl.concat('0% 0%, ');
+                            pl = pl.concat('100% 0%, ');
+                            pl = pl.concat('100% 100%, ');
+                            pl = pl.concat('0% 100%, ');
+                            pl = pl.concat('0% 0%, ');
+                            pl = pl.concat('0% 0%, ');
+                        }
+                    }
+                    pl = pl.substr(0, pl.length - 2).concat(')')

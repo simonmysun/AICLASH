@@ -284,8 +284,9 @@ footer {
 }
 
 .fog-clip {
-/*
-    clip-path: url(#fog-clip-path);
-    -webkit-clip-path: url(#fog-clip-path);
-*/
+    /*mask: url(#fog-mask);
+    -webkit-mask: url(#fog-mask) top left / cover;
+    clip-path: url();
+    -webkit-clip-path: url() top left / cover;*/
+    transition: all 0.1s ease;
 }

@@ -58,6 +58,19 @@ requirejs([], function() {
             gui.add(game, 'resetMap');
             gui.add(game, 'pause');
             gui.add(game, 'timeLimit');
+            gui.add(new function() {
+                this.fog = function() {
+                    if($('#fog').attr('data-fog') === 'true') {
+                        $('#fog').css('transition', 'all 1s ease');
+                        $('#fog').css('-webkit-clip-path', 'polygon(0% 0%, 0% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%, 0% 0%, 0% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%, 0% 0%, 0% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%, 0% 0%, 0% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%, 0% 0%, 0% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%, 0% 0%, 0% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%, 0% 0%)');
+                        $('#fog').attr('data-fog', 'false');
+                    } else {
+                        $('#fog').css('transition', 'all 0.1s ease');
+                        $('#fog').attr('data-fog', 'true');
+                    }
+                    $('#fog').toggleClass('fog-clip');
+                };
+            }, 'fog')
             stats.setMode(1); 
             stats.domElement.style.position = 'absolute';
             stats.domElement.style.right = '0px';
