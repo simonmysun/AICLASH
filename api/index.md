@@ -125,10 +125,11 @@ title: AIClash 评测平台选手接口文档
 
 ### 例子
 
-#### 查询第二个地精的位置
+#### 查询第二个地精的位置和视野
 
 	var gX = game.gnomes[1].x; // typeof gX === 'number'
 	var gY = game.gnomes[1].y; // typeof gY === 'number'
+	var gV = game.gnomes[1].vision; // typeof gV === 'number'
 
 #### 查询对方在 `(x, y)` 处经过的次数
 
@@ -148,6 +149,21 @@ title: AIClash 评测平台选手接口文档
 * 若 `c & 8 > 0` 则 `c` 与左方方格连通. 
 
 当且仅当存在某一个时刻一个己方的地精与 `x`, `y` 的曼哈顿距离小于等于其视野大小时, 访问此处连通状态是有效的. 
+
+## 选手应返回的数据
+
+选手应返回一个包含三个分别表示三个地精下一步行进方向的数字的数组, 顺序与给出的地精顺序相同, 例如: 
+
+    return [
+        1, 
+        4, 
+        8
+    ];
+
+, 或者: 
+
+    var result = [1, 4, 8];
+    return result;
 
 ## 选手可以调用的接口
 

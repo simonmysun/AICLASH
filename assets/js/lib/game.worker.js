@@ -219,14 +219,11 @@ function Game() {
                     }
                     if(action === 1) {
                         currGnome.y -= 1;
-                    }
-                    if(action === 2) {
+                    } else if(action === 2) {
                         currGnome.x += 1;
-                    }
-                    if(action === 4) {
+                    } else if(action === 4) {
                         currGnome.y += 1;
-                    }
-                    if(action === 8) {
+                    } else if(action === 8) {
                         currGnome.x -= 1;
                     }
                     self.map.visited[currGnome.x][currGnome.y][player] += 1;
@@ -258,3 +255,4 @@ function Game() {
 }
 
 var game = new Game();
+
