@@ -6,7 +6,6 @@ if(!window.performance) {
     };
 }
 
-
 var Game = function() {
     var self = this;
     self.gameWorker = {terminate: function() {}};
@@ -97,6 +96,7 @@ var Game = function() {
                     }
                     polygon = polygon.substr(0, polygon.length - 2).concat(')')
                     $('#fog').css('-webkit-clip-path', polygon);
+                    $('#fog').css('clip-path', polygon);
                 }
             } else if(data.type === 'query') {
                 stats.end();
