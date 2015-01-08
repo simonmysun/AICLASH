@@ -320,20 +320,3 @@ var Game = function() {
 window.onerror = function(msg,url,line){
    //alert(msg,url,line);
 }
-
-
-
-                    var pl = '';
-                    pl = pl.concat('polygon(0% 0%, ');
-                    for(var p in self.gnomes) {
-                        for(var g in self.gnomes[p]) {
-                            var gnome = self.gnomes[p][g];
-                            pl = pl.concat('0% 0%, ');
-                            pl = pl.concat('100% 0%, ');
-                            pl = pl.concat('100% 100%, ');
-                            pl = pl.concat('0% 100%, ');
-                            pl = pl.concat('0% 0%, ');
-                            pl = pl.concat('0% 0%, ');
-                        }
-                    }
-                    pl = pl.substr(0, pl.length - 2).concat(')')
