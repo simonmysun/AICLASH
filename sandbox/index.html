@@ -28,18 +28,11 @@ title: Sandbox
 <div id="canvas-wrap">
   <div id="canvas-container">
     <div class="fog-wrap">
-      <div class="fog-clip">
+      <div class="fog-clip" id="fog" data-fog="false" style="transition: all 1s ease; -webkit-transition: all 1s ease; -webkit-clip-path: polygon(0% 0%, 0% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%, 0% 0%, 0% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%, 0% 0%, 0% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%, 0% 0%, 0% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%, 0% 0%, 0% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%, 0% 0%, 0% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%, 0% 0%);">
         <div class="fog-wrap">
-        <canvas id="canvas" width="798px" height="598px"></canvas>
+          <canvas id="canvas" width="798px" height="598px"></canvas>
         </div>
       </div>
-      <svg width="0" height="0">
-        <defs>
-          <clipPath id="fog-clip-path">
-            <circle cx="600" cy="600" r="20"></circle>
-          </clipPath>
-        </defs>
-      </svg>
     </div>
   </div>
 </div>

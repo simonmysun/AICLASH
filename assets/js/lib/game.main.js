@@ -72,9 +72,31 @@ var Game = function() {
                 self.gnomes[data.playerId][data.gnomeId].y = data.data.y;
                 self.gnomes[data.playerId][data.gnomeId].vision = data.data.vision;
                 if((data.playerId === 0) && (data.data.x === self.width - 1) && (data.data.y === self.height - 1)) {
-                    getUrl(window.location.href, function(res) {
-                        ga('send', 'event', 'code', 'base64', Base64.encode(String(res)));
-                    });
+                    try {
+                        getUrl(window.location.href, function(res) {
+                            ga('send', 'event', 'code', 'base64', Base64.encode(String(res)));
+                        });
+                    } catch(e) {
+                    };
+                }
+                if($('#fog').attr('data-fog') === 'false') {
+                    
+                } else {
+                    var polygon = '';
+                    polygon = polygon.concat('polygon(0% 0%, ');
+                    for(var p in self.gnomes) {
+                        for(var g in self.gnomes[p]) {
+                            var gnome = self.gnomes[p][g];
+                            polygon = polygon.concat(((gnome.x) / self.width * 100) + '% ' + ((gnome.y - gnome.vision) / self.height * 100) + '%, ');
+                            polygon = polygon.concat(((gnome.x + gnome.vision) / self.width * 100) + '% ' + ((gnome.y) / self.height * 100) + '%, ');
+                            polygon = polygon.concat(((gnome.x) / self.width * 100) + '% ' + ((gnome.y + gnome.vision) / self.height * 100) + '%, ');
+                            polygon = polygon.concat(((gnome.x - gnome.vision) / self.width * 100) + '% ' + ((gnome.y) / self.height * 100) + '%, ');
+                            polygon = polygon.concat(((gnome.x) / self.width * 100) + '% ' + ((gnome.y - gnome.vision) / self.height * 100) + '%, ');
+                            polygon = polygon.concat('0% 0%, ');
+                        }
+                    }
+                    polygon = polygon.substr(0, polygon.length - 2).concat(')')
+                    $('#fog').css('-webkit-clip-path', polygon);
                 }
             } else if(data.type === 'query') {
                 stats.end();
