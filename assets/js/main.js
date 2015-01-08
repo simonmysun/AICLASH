@@ -57,7 +57,7 @@ requirejs([], function() {
             gui.add(game, 'height');
             gui.add(game, 'resetMap');
             gui.add(game, 'pause');
-            gui.add(painter, 'delay');
+            gui.add(game, 'timeLimit');
             stats.setMode(1); 
             stats.domElement.style.position = 'absolute';
             stats.domElement.style.right = '0px';

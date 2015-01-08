@@ -16,6 +16,7 @@ var Game = function() {
     self.gnomeNum = 3;
     self.wait = 0;
     self.running = 0;
+    self.paused = 0;
     self.timeLimit = 300 * 1000;
     self.delay = 0;
     self.started = 0;
@@ -85,27 +86,43 @@ var Game = function() {
                 if(typeof data.id === 'number') {
                     var worker = playerWorkerList[data.id];
                     if(worker.time > 0) {
-                        worker.timer = setTimeout(worker.fn, worker.time);
-                        worker.timeStamp = performance.now();
-                        worker.done = 0;
-                        worker.postMessage({
-                            type: 'query',
-                            buf: buf[data.id]
-                        });
+                        setTimeout((function(worker, buf, game) {
+                            return function() {
+                                if(game.paused === 0) {
+                                    worker.timer = setTimeout(worker.fn, worker.time);
+                                    worker.timeStamp = performance.now();
+                                    worker.done = 0;
+                                    worker.postMessage({
+                                        type: 'query',
+                                        buf: buf
+                                    });
+                                } else {
+                                    setTimeout(arguments.callee, 15);
+                                }
+                            };
+                        })(worker, buf[data.id], self), 15);
                     } else {
-                            worker.fn();
+                        worker.fn();
                     }
                 } else {
                     for(var i = 0; i < self.playerNum; i ++ ) {
                         var worker = playerWorkerList[i];
                         if(worker.time > 0) {
-                            worker.timer = setTimeout(worker.fn, worker.time);
-                            worker.timeStamp = performance.now();
-                            worker.done = 0;
-                            worker.postMessage({
-                                type: 'query',
-                                buf: buf[i]
-                            });
+                            setTimeout((function(worker, buf, game) {
+                                return function() {
+                                    if(game.paused === 0) {
+                                        worker.timer = setTimeout(worker.fn, worker.time);
+                                        worker.timeStamp = performance.now();
+                                        worker.done = 0;
+                                        worker.postMessage({
+                                            type: 'query',
+                                            buf: buf
+                                        });
+                                    } else {
+                                        setTimeout(arguments.callee, 15);
+                                    }
+                                };
+                            })(worker, buf[i], self), 15);
                         } else {
                             worker.fn();
                         }
@@ -175,7 +192,7 @@ var Game = function() {
         painter.renderAll();
     };
     self.pause = function() {
-        self.running |= 1;
+        self.paused ^= 1;
     };
     self.setScript = function(player, script) {
         playerScripts[player] = script;
@@ -268,9 +285,9 @@ var Game = function() {
             };
             worker.onmessage = onmessage;
             worker.onerror = function(e){
-                console.log(e.message);
-                console.log(e.lineno);
-                console.log(e.filename);
+                //console.log(e.message);
+                //console.log(e.lineno);
+                //console.log(e.filename);
             };
             playerWorkerList = playerWorkerList.concat(worker);
         }
@@ -279,5 +296,5 @@ var Game = function() {
 };
 
 window.onerror = function(msg,url,line){
-   alert(msg,url,line);
+   //alert(msg,url,line);
 }
