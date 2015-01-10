@@ -59,6 +59,7 @@ var Game = function() {
             self.gnomes[1].push(gnome);
         }
         self.timeoutPlayers = 0;
+        self.paused = 0;
         self.gameWorker = new Worker('./../assets/js/lib/game.worker.js');
         self.gameWorker.onmessage = function(sdata) {
             var data = sdata.data;
