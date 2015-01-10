@@ -44,10 +44,14 @@ requirejs([], function() {
                         game.setScript(0, editors[0].getValue());
                         game.setScript(1, editors[1].getValue());
                         game.run();
+                        $('#code-editor-wrap').removeClass('code-editor-visible');
                     } else {
                         game.running = 0;
                         game.init();
                         game.resetMap();
+                        $('#fog').css('transition', 'all 0.5s ease');
+                        $('#fog').css('-webkit-clip-path', 'polygon(0% 0%, 0% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%, 0% 0%, 0% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%, 0% 0%, 0% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%, 0% 0%, 0% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%, 0% 0%, 0% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%, 0% 0%, 0% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%, 0% 0%)');
+                        $('#fog').css('clip-path', 'polygon(0% 0%, 0% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%, 0% 0%, 0% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%, 0% 0%, 0% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%, 0% 0%, 0% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%, 0% 0%, 0% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%, 0% 0%, 0% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%, 0% 0%)');
                     }
                     $(this).toggleClass('btn-success').toggleClass('btn-danger').toggleClass('text-stop').toggleClass('text-run').find('span').toggleClass('glyphicon-play').toggleClass('glyphicon-stop');
                 }
@@ -61,7 +65,7 @@ requirejs([], function() {
             gui.add(new function() {
                 this.fog = function() {
                     if($('#fog').attr('data-fog') === 'true') {
-                        $('#fog').css('transition', 'all 1s ease');
+                        $('#fog').css('transition', 'all 0.5s ease');
                         $('#fog').css('-webkit-clip-path', 'polygon(0% 0%, 0% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%, 0% 0%, 0% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%, 0% 0%, 0% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%, 0% 0%, 0% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%, 0% 0%, 0% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%, 0% 0%, 0% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%, 0% 0%)');
                         $('#fog').css('clip-path', 'polygon(0% 0%, 0% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%, 0% 0%, 0% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%, 0% 0%, 0% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%, 0% 0%, 0% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%, 0% 0%, 0% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%, 0% 0%, 0% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%, 0% 0%)');
                         $('#fog').attr('data-fog', 'false');
