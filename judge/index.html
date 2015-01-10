@@ -1,0 +1,24 @@
+---
+layout: default
+title: Sandbox
+---
+<div id="code-editor-wrap">
+  <div id="tabs">
+    <ul class="nav nav-tabs">
+      <li class="active" data-editor="0"><a>Player 1</a></li>
+      <li data-editor="1"><a>Player 2</a></li>
+    </ul>
+  </div>
+  <div id="ctrl-btn">
+    <a class="btn btn-info" id="code-editor-btn"><span class="glyphicon glyphicon-chevron-up"></span>&nbsp;Code</a>
+    <a class="btn btn-success text-run" id="btn-run"><span class="glyphicon glyphicon-play"></span>&nbsp;</a>
+    <a class="btn btn-warning" id="btn-share"><span class="glyphicon glyphicon-share-alt"></span></a>
+  </div>
+</div>
+<div id="canvas-wrap">
+  <div id="canvas-container">
+    <canvas id="canvas" width="798px" height="598px"></canvas>
+  </div>
+</div>
+
+<script data-main="{{ site.baseurl }}/assets/js/judge" src="{{ site.baseurl }}/assets/lib/requirejs/js/require.js"></script>
