@@ -16,12 +16,6 @@ requirejs([], function() {
             var canvas = $('#canvas')[0];
             painter = new Painter(canvas, game, 1000 / 25);
             game.resetMap();
-            $('#btn-run').click(function() {
-                if(game.wait == 0) {
-                    runNext();
-                    $(this).toggleClass('btn-success').toggleClass('btn-danger').toggleClass('text-stop').toggleClass('text-run').find('span').toggleClass('glyphicon-play').toggleClass('glyphicon-stop');
-                }
-            });
             $('.loader-wrapper').fadeOut();
         });
     });
@@ -45,3 +39,14 @@ var runNext = function() {
 var result = [];
 
 playerScripts = ['', ''];
+
+/*
+(function downloadUrl(fileName, Url){
+    var aLink = document.createElement('a');
+    var evt = document.createEvent("HTMLEvents");
+    evt.initEvent("click", false, false);
+    aLink.download = fileName;
+    aLink.href = Url;
+    aLink.dispatchEvent(evt);
+})('00',document.getElementById('canvas').toDataURL("image/png"))
+*/
