@@ -1,0 +1,59 @@
+{
+    "players": [
+        {
+            "teamId": 999, 
+            "ELORating": 2000, 
+            "battleLog": []
+        }, 
+        {
+            "teamId": 0, 
+            "ELORating": 2000, 
+            "battleLog": []
+        }, 
+        {
+            "teamId": 11, 
+            "ELORating": 2000, 
+            "battleLog": []
+        }, 
+        {
+            "teamId": 26, 
+            "ELORating": 2000, 
+            "battleLog": []
+        }, 
+        {
+            "teamId": 29, 
+            "ELORating": 2000, 
+            "battleLog": []
+        }, 
+        {
+            "teamId": 30, 
+            "ELORating": 2000, 
+            "battleLog": []
+        }, 
+        {
+            "teamId": 32, 
+            "ELORating": 2000, 
+            "battleLog": []
+        }, 
+        {
+            "teamId": 34, 
+            "ELORating": 2000, 
+            "battleLog": []
+        }, 
+        {
+            "teamId": 35, 
+            "ELORating": 2000, 
+            "battleLog": []
+        }, 
+        {
+            "teamId": 36, 
+            "ELORating": 2000, 
+            "battleLog": []
+        }, 
+        {
+            "teamId": 38, 
+            "ELORating": 2000, 
+            "battleLog": []
+        }
+    ]
+}

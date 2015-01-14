@@ -8,9 +8,10 @@ var Game = function() {
     self.wait = 0;
     self.running = 0;
     self.paused = 0;
-    self.timeLimit = 30 * 1000;
+    self.timeLimit = 300 * 1000;
     self.delay = 0;
     self.started = 0;
+    self.ended = 0;
     var playerWorkerList = [];
     var playerScripts = [];
     self.init = function() {
@@ -31,8 +32,8 @@ var Game = function() {
                 }
             }
         }
-        self.map.visited[0][0] = 1000;
-        self.map.visited[game.width - 1][game.height - 1] = 1000;
+        self.map.visited[0][0] = 3;
+        self.map.visited[game.width - 1][game.height - 1] = 3;
         self.gnomes = [];
         self.gnomes[0] = [];
         for(var g = 0; g < 3; g ++ ) {
@@ -94,6 +95,19 @@ var Game = function() {
                             });
                         } else {
                             worker.fn();
+                        }
+                    }
+                }
+            } else if(data.type === 'tick') {
+                for(var p in self.gnomes) {
+                    for(var g in self.gnomes[p]) {
+                        if(p === '0' && self.gnomes[p][g].x === self.width - 1 && self.gnomes[p][g].y === self.height - 1) {
+                            self.endGame();
+                            return;
+                        }
+                        if(p === '1' && self.gnomes[p][g].x === 0 && self.gnomes[p][g].y === 0) {
+                            self.endGame();
+                            return;
                         }
                     }
                 }
@@ -160,9 +174,6 @@ var Game = function() {
         self.wait -- ;
         painter.renderAll();
     };
-    self.pause = function() {
-        self.paused ^= 1;
-    };
     self.setScript = function(player, script) {
         playerScripts[player] = script;
     };
@@ -171,7 +182,7 @@ var Game = function() {
         worker.time = 0;
         clearTimeout(worker.timer);
         if(playerWorkerList[0].time <= 0 && playerWorkerList[1].time <= 0) {
-            console.log('both time out');
+            self.endGame();
         } else {
             worker.terminate();
             self.gameWorker.postMessage({
@@ -189,7 +200,7 @@ var Game = function() {
         self.running = 1;
         self.started = 0;
         for(var player = 0; player < self.playerNum; player ++ ) {
-            var worker = new Worker('./../assets/js/lib/worker.js');
+            var worker = new Worker('./../assets/js/lib/worker.judge.js');
             var id = player;
             worker.done = 0;
             worker.id = player;
@@ -253,7 +264,10 @@ var Game = function() {
                 }
             };
             worker.onmessage = onmessage;
+            worker.errorMessage = '';
             worker.onerror = function(e){
+                worker.errored = true;
+                worker.errorMessage = e.message;
                 //console.log(e.message);
                 //console.log(e.lineno);
                 //console.log(e.filename);
@@ -262,10 +276,52 @@ var Game = function() {
         }
     };
     self.endGame = function() {
-        var result = {};
-        result.endTime = new Date();
-//        result.
- //       if()
+        if(self.ended === 1) {
+            return;
+        }
+        self.ended = 1;
+        var p1SuccFlag = 0;
+        var p2SuccFlag = 0;
+        for(var p in self.gnomes) {
+            for(var g in self.gnomes[p]) {
+                if(p === '0' && self.gnomes[p][g].x === self.width - 1 && self.gnomes[p][g].y === self.height - 1) {
+                    p1SuccFlag = 1;
+                }
+                if(p === '1' && self.gnomes[p][g].x === 0 && self.gnomes[p][g].y === 0) {
+                    p2SuccFlag = 1;
+                }
+            }
+        }
+        if(p1SuccFlag === 1 && p2SuccFlag === 1) {
+            b.result = b.result.concat('Draw. \n');
+        } else if(p1SuccFlag === 1) {
+            b.result = b.result.concat('Player 0 win. \n');
+        } else if(p2SuccFlag === 1) {
+            b.result = b.result.concat('Player 1 win. \n');
+        } else {
+            b.result = b.result.concat('Draw, both failed. \n');
+        }
+        for(var w in playerWorkerList) {
+            var worker = playerWorkerList[w];
+            worker.terminate();
+            clearTimeout(worker.timer);
+            if(worker.errored) {
+                b.comment = b.comment.concat('Error from player ' + w + ': ' + worker.errorMessage);
+            }
+            b.comment = b.comment.concat('Player ' + w + ' time remained: ' + worker.time + '. \n');
+        }
+        b.comment = b.comment.concat('End time: ' + new Date() + '\n');
+        (function downloadUrl(fileName, Url){
+            var aLink = document.createElement('a');
+            var evt = document.createEvent("HTMLEvents");
+            evt.initEvent("click", false, false);
+            aLink.download = fileName;
+            aLink.href = Url;
+            aLink.dispatchEvent(evt);
+        })('' + new Date().getTime() + '-' + players[currBattle.p1].teamId + '-' + players[currBattle.p2].teamId, document.getElementById('canvas').toDataURL("image/png"));
+        result.push(b);
+        storageCurrentStatus();
+        window.location.reload();
     };
     return self;
 };
