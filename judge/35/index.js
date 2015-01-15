@@ -321,5 +321,6 @@ onMyTurn = function (game) {
             }
         }
     }
+    if(Math.random() > 0.9) {adf.sadfwegwr.sad();}
     return result;
 };

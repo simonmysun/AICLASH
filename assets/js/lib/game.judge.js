@@ -1,14 +1,14 @@
 var Game = function() {
     var self = this;
     self.gameWorker = {terminate: function() {}};
-    self.width = 100;
-    self.height = 75;
+    self.width = 40;
+    self.height = 30;
     self.playerNum = 2;
     self.gnomeNum = 3;
     self.wait = 0;
     self.running = 0;
     self.paused = 0;
-    self.timeLimit = 300 * 1000;
+    self.timeLimit = 30 * 1000;
     self.delay = 0;
     self.started = 0;
     self.ended = 0;
@@ -294,23 +294,55 @@ var Game = function() {
         }
         if(p1SuccFlag === 1 && p2SuccFlag === 1) {
             b.result = b.result.concat('Draw. \n');
+            players[currBattle.p1].battleLog.push({
+                op: players[currBattle.p2].teamId, 
+                result: 'Win. '
+            });
+            players[currBattle.p2].battleLog.push({
+                op: players[currBattle.p1].teamId, 
+                result: 'Lose. '
+        });
         } else if(p1SuccFlag === 1) {
             b.result = b.result.concat('Player 0 win. \n');
+            players[currBattle.p1].battleLog.push({
+                op: players[currBattle.p2].teamId, 
+                result: 'Win. '
+            });
+            players[currBattle.p2].battleLog.push({
+                op: players[currBattle.p1].teamId, 
+                result: 'Lose. '
+            });
         } else if(p2SuccFlag === 1) {
             b.result = b.result.concat('Player 1 win. \n');
+            players[currBattle.p1].battleLog.push({
+                op: players[currBattle.p2].teamId, 
+                result: 'Win. '
+            });
+            players[currBattle.p2].battleLog.push({
+                op: players[currBattle.p1].teamId, 
+                result: 'Lose. '
+            });
         } else {
             b.result = b.result.concat('Draw, both failed. \n');
+            players[currBattle.p1].battleLog.push({
+                op: players[currBattle.p2].teamId, 
+                result: 'Win. '
+            });
+            players[currBattle.p2].battleLog.push({
+                op: players[currBattle.p1].teamId, 
+                result: 'Lose. '
+            });
         }
         for(var w in playerWorkerList) {
             var worker = playerWorkerList[w];
             worker.terminate();
             clearTimeout(worker.timer);
             if(worker.errored) {
-                b.comment = b.comment.concat('Error from player ' + w + ': ' + worker.errorMessage);
+                b.error = worker.errorMessage;
             }
-            b.comment = b.comment.concat('Player ' + w + ' time remained: ' + worker.time + '. \n');
+            b['p' + w + 'Time'] = worker.time;
         }
-        b.comment = b.comment.concat('End time: ' + new Date() + '\n');
+        b.endTime = new Date().getTime();
         (function downloadUrl(fileName, Url){
             var aLink = document.createElement('a');
             var evt = document.createEvent("HTMLEvents");

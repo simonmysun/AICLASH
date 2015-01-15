@@ -39,19 +39,51 @@ var run = function() {
     game.resetMap();
     b.p1 = players[currBattle.p1].teamId;
     b.p2 = players[currBattle.p2].teamId;
-    b.comment = b.comment.concat('Start time: ' + new Date() + '\n');
+    b.startTime = new Date().getTime();
     if(players[currBattle.p1].teamId === 0) {
         b.result = b.result.concat('Player 1 win. \n');
         b.comment = b.comment.concat('Player 0 vincible. \n');
+        players[currBattle.p1].battleLog.push({
+            op: players[currBattle.p2].teamId, 
+            result: 'Lose. '
+        });
+        players[currBattle.p2].battleLog.push({
+            op: players[currBattle.p1].teamId, 
+            result: 'Win. '
+        });
     } else if(players[currBattle.p1].teamId === 999) {
         b.result = b.result.concat('Player 0 win. \n');
         b.comment = b.comment.concat('Player 0 invincible. \n');
+        players[currBattle.p1].battleLog.push({
+            op: players[currBattle.p2].teamId, 
+            result: 'Win. '
+        });
+        players[currBattle.p2].battleLog.push({
+            op: players[currBattle.p1].teamId, 
+            result: 'Lose. '
+        });
     } else if(players[currBattle.p2].teamId === 0) {
         b.result = b.result.concat('Player 0 win. \n');
         b.comment = b.comment.concat('Player 1 vincible. \n');
+        players[currBattle.p1].battleLog.push({
+            op: players[currBattle.p2].teamId, 
+            result: 'Win. '
+        });
+        players[currBattle.p2].battleLog.push({
+            op: players[currBattle.p1].teamId, 
+            result: 'Lose. '
+        });
     } else if(players[currBattle.p2].teamId === 999) {
         b.result = b.result.concat('Player 1 win. \n');
         b.comment = b.comment.concat('Player 1 invincible. \n');
+        players[currBattle.p1].battleLog.push({
+            op: players[currBattle.p2].teamId, 
+            result: 'Lose. '
+        });
+        players[currBattle.p2].battleLog.push({
+            op: players[currBattle.p1].teamId, 
+            result: 'Win. '
+        });
     } else {
         setTimeout(function() {
             game.setScript(0, players[currBattle.p1].code);
@@ -60,7 +92,7 @@ var run = function() {
         }, 1000);
         return;
     }
-    b.comment = b.comment.concat('End time: ' + new Date() + '\n');
+    b.endTime = new Date().getTime();
     result.push(b);
     storageCurrentStatus();
     window.location.reload();
@@ -119,3 +151,14 @@ var currBattle;
 var b = {};
 b.result = '';
 b.comment = '';
+
+
+/* Judge Script: 
+localStorage.clear();
+loadPlayers();
+setTimeout(function() {
+	generateBattles();
+	storageCurrentStatus();
+	window.location.reload();
+}, 1000);
+*/
