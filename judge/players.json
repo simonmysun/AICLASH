@@ -3,57 +3,68 @@
         {
             "teamId": 999, 
             "ELORating": 2000, 
-            "battleLog": []
+            "battleLog": [],
+            "ratingLog": []
         }, 
         {
             "teamId": 0, 
             "ELORating": 2000, 
-            "battleLog": []
+            "battleLog": [],
+            "ratingLog": []
         }, 
         {
             "teamId": 11, 
             "ELORating": 2000, 
-            "battleLog": []
+            "battleLog": [],
+            "ratingLog": []
         }, 
         {
             "teamId": 26, 
             "ELORating": 2000, 
-            "battleLog": []
+            "battleLog": [],
+            "ratingLog": []
         }, 
         {
             "teamId": 29, 
             "ELORating": 2000, 
-            "battleLog": []
+            "battleLog": [],
+            "ratingLog": []
         }, 
         {
             "teamId": 30, 
             "ELORating": 2000, 
-            "battleLog": []
+            "battleLog": [],
+            "ratingLog": []
         }, 
         {
             "teamId": 32, 
             "ELORating": 2000, 
-            "battleLog": []
+            "battleLog": [],
+            "ratingLog": []
         }, 
         {
             "teamId": 34, 
             "ELORating": 2000, 
-            "battleLog": []
+            "battleLog": [],
+            "ratingLog": []
         }, 
         {
             "teamId": 35, 
             "ELORating": 2000, 
-            "battleLog": []
+            "battleLog": [],
+            "ratingLog": []
         }, 
         {
             "teamId": 36, 
             "ELORating": 2000, 
-            "battleLog": []
+            "battleLog": [],
+            "ratingLog": []
         }, 
         {
             "teamId": 38, 
             "ELORating": 2000, 
-            "battleLog": []
+            "battleLog": [],
+            "ratingLog": []
         }
     ]
 }
