@@ -125,6 +125,9 @@ function Game() {
     self.update = function() {
         currAction = [];
         var randomQuery = Math.floor(Math.random() * 2);
+        postMessage({
+            type: 'tick'
+        });
         self.reduceAction.init(1, function() {
             postMessage({
                 type: 'query',
@@ -194,6 +197,9 @@ function Game() {
     };
     self.update_con = function() {
         currAction = [];
+        postMessage({
+            type: 'tick'
+        });
         postMessage({
             type: 'query'
         });
