@@ -92,7 +92,7 @@ var loadPlayers = function() {
                 })(p));
             }
         }
-    })
+    });
 };
 
 var generateBattles = function() {

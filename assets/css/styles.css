@@ -290,3 +290,9 @@ footer {
     -webkit-clip-path: url() top left / cover;*/
     transition: all 0.1s ease;
 }
+
+#chart {
+    width: 100%;
+    height: 200px;
+    padding: 5px 20px;
+}
