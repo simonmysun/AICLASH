@@ -18,7 +18,25 @@ $(document).ready(function() {
                 battleIndex[battles[b].p1][battles[b].p2] = battles[b];
                 battleIndex[battles[b].p1][battles[b].p1] = {};
             }
-            var table = '<table class="table table-bordered table-hover table-striped">';
+            var table;
+            $('#result').append('<h2>比赛结果</h2>');
+            table = '<table class="table table-bordered table-hover table-striped">';
+            table += '<tr><th>Player</th><th>Final rating</th><th>AI Code</th><th>Documents</th></tr>';
+            for(var i in playerIndex) {
+                if(i !== '0' && i !== '999') {
+                var player = playerIndex[i];
+                    table += '<tr>';
+                    table += '<td>' + i + '</td>';
+                    table += '<td>' + player.ELORating + '</td>';
+                    table += '<td><a href="' + player.teamId + '/index.js" target="_blank">Code</a></td>';
+                    table += '<td><a href="' + player.teamId + '/doc/index.md" target="_blank">Doc</a></td>';
+                    table += '</tr>';
+                }
+            }
+            table += '</table>';
+            $('#result').append(table);
+            $('#result').append('<h2>比赛记录</h2>');
+            table = '<table class="table table-bordered table-hover table-striped">';
             table += '<tr><th>#</th>';
             for(var i in battleIndex) {
                 if(i !== '0' && i !== '999') {
@@ -79,7 +97,7 @@ function showPlayer(p) {
                     trigger: 'axis'
                 },
                 legend: {
-                    data:['rating']
+                    data:['ELO rating']
                 },
                 toolbox: {
                     show : true,
@@ -119,7 +137,7 @@ function showPlayer(p) {
                 ],
                 series : [
                     {
-                        name: 'ELORating changes',
+                        name: 'ELO rating',
                         type: 'line',
                         data: player.ratingLog
                     }
