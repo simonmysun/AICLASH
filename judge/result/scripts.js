@@ -3,18 +3,18 @@ var battles;
 var battleIndex = [];
 var playerIndex = [];
 
-$(document).ready(function() {
-    $.get('playerdata', function(res) {
+$(document).ready(function () {
+    $.get('playerdata', function (res) {
         players = JSON.parse(Base64.decode(res));
-        for(var p in players) {
+        for (var p in players) {
             playerIndex[players[p].teamId] = players[p];
         }
-        $.get('battledata', function(res) {
+        $.get('battledata', function (res) {
             battles = JSON.parse(Base64.decode(res));
-            for(var p in players) {
+            for (var p in players) {
                 battleIndex[players[p].teamId] = [];
             }
-            for(var b in battles) {
+            for (var b in battles) {
                 battleIndex[battles[b].p1][battles[b].p2] = battles[b];
                 battleIndex[battles[b].p1][battles[b].p1] = {};
             }
@@ -22,14 +22,14 @@ $(document).ready(function() {
             $('#result').append('<h2>比赛结果</h2>');
             table = '<table class="table table-bordered table-hover table-striped">';
             table += '<tr><th>Player</th><th>Final rating</th><th>AI Code</th><th>Documents</th></tr>';
-            for(var i in playerIndex) {
-                if(i !== '0' && i !== '999') {
-                var player = playerIndex[i];
+            for (var i in playerIndex) {
+                if (i !== '0' && i !== '999') {
+                    var player = playerIndex[i];
                     table += '<tr>';
                     table += '<td>' + i + '</td>';
                     table += '<td>' + player.ELORating + '</td>';
                     table += '<td><a href="' + player.teamId + '/index.js" target="_blank">Code</a></td>';
-                    table += '<td><a href="' + player.teamId + '/doc/index.md" target="_blank">Doc</a></td>';
+                    table += '<td><a href="' + player.teamId + '/doc/" target="_blank">Doc</a></td>';
                     table += '</tr>';
                 }
             }
@@ -38,19 +38,19 @@ $(document).ready(function() {
             $('#result').append('<h2>比赛记录</h2>');
             table = '<table class="table table-bordered table-hover table-striped">';
             table += '<tr><th>#</th>';
-            for(var i in battleIndex) {
-                if(i !== '0' && i !== '999') {
+            for (var i in battleIndex) {
+                if (i !== '0' && i !== '999') {
                     table += '<th><a class="player" data-player="' + i + '">' + i + '</a></th>';
                 }
             }
             table += '</tr>';
-            for(var i in battleIndex) {
-                if(i !== '0' && i !== '999') {
+            for (var i in battleIndex) {
+                if (i !== '0' && i !== '999') {
                     table += '<tr>';
                     table += '<td><a class="player" data-player="' + i + '">' + i + '</a></td>';
-                    for(var j in battleIndex[i]) {
-                        if(j !== '0' && j !== '999') {
-                            if(i !== j) {
+                    for (var j in battleIndex[i]) {
+                        if (j !== '0' && j !== '999') {
+                            if (i !== j) {
                                 table += '<td><a class="battle" data-p1="' + i + '" data-p2="' + j + '">view</a></td>';
                             }
                             else {
@@ -63,10 +63,10 @@ $(document).ready(function() {
             }
             table += '</table>';
             $('#result').append(table);
-            $('.player').click(function() {
+            $('.player').click(function () {
                 showPlayer($(this).attr('data-player'));
             });
-            $('.battle').click(function() {
+            $('.battle').click(function () {
                 showBattle($(this).attr('data-p1'), $(this).attr('data-p2'));
             });
         });
@@ -85,39 +85,39 @@ function buildModal(title, content) {
 function showPlayer(p) {
     var player = playerIndex[p];
     buildModal('Player ' + player.teamId, '<h3>Final Rating: ' + player.ELORating + '</h3>');
-    $('.modal').on('shown.bs.modal', (function(player) {
-        return function() {
-            var myChart = echarts.init(document.getElementById('chart')); 
+    $('.modal').on('shown.bs.modal', (function (player) {
+        return function () {
+            var myChart = echarts.init(document.getElementById('chart'));
             myChart.setOption({
-                title : {
+                title: {
                     text: 'Rating',
                     subtext: 'Changes'
                 },
-                tooltip : {
+                tooltip: {
                     trigger: 'axis'
                 },
                 legend: {
-                    data:['ELO rating']
+                    data: ['ELO rating']
                 },
                 toolbox: {
-                    show : true,
-                    feature : {
-                        mark : {show: true},
-                        dataView : {show: true, readOnly: false},
-                        magicType : {show: true, type: ['line', 'bar']},
-                        restore : {show: true},
-                        saveAsImage : {show: true}
+                    show: true,
+                    feature: {
+                        mark: { show: true },
+                        dataView: { show: true, readOnly: false },
+                        magicType: { show: true, type: ['line', 'bar'] },
+                        restore: { show: true },
+                        saveAsImage: { show: true }
                     }
                 },
-                calculable : true,
-                xAxis : [
+                calculable: true,
+                xAxis: [
                     {
-                        type : 'category',
-                        boundaryGap : false,
-                        data : (function() {
-                            return function() {
+                        type: 'category',
+                        boundaryGap: false,
+                        data: (function () {
+                            return function () {
                                 var b = [];
-                                for(var i in player.ratingLog) {
+                                for (var i in player.ratingLog) {
                                     b[i] = i;
                                 }
                                 return b;
@@ -125,17 +125,17 @@ function showPlayer(p) {
                         })()()
                     }
                 ],
-                yAxis : [
+                yAxis: [
                     {
-                        type : 'value',
-                        boundaryGap: [1, 1], 
-                        scale: true, 
-                        axisLabel : {
+                        type: 'value',
+                        boundaryGap: [1, 1],
+                        scale: true,
+                        axisLabel: {
                             formatter: '{value}'
                         }
                     }
                 ],
-                series : [
+                series: [
                     {
                         name: 'ELO rating',
                         type: 'line',
