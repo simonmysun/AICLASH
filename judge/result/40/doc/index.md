@@ -1,3 +1,8 @@
+---
+layout: page
+title: 文档：40 队
+---
+
 1. 第一次调用onMyTurn时，初始化自己的坐标selfX、selfY、最终的目标的坐标lastGogalX、lastGogalY，以及记录地精行走路径的数组pathVisQ，以及地精行走过的地图的标志myVis，对方行走过的标记mapVisited、地图标记mapFlag。
 1. 根据当前地精的坐标值改变getGogalFlag、pathVis、myVis数组。
 1. 并根据三者的视野对对方行走过的标记mapVisited、地图标记mapFlag进行更新。
