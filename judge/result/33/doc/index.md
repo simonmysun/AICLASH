@@ -1,16 +1,21 @@
-��һ��initOurInfo(game)����ʼ��������Ҫ�ĸ�����Ϣ������ҩˮ��λ��(buffX, buffY)�Լ���ͼ�ı��ourMap���Լ��߹���·�ı��ourVisited���Է��߹��ı��enemyVisited���ؾ��ϴ�ѡ��ķ���gnomeLastDir������player1��2�ı��amIplayer1��
+---
+layout: page
+title: 文档：33 队
+---
 
-�ڶ���updateOurMap(game) ��ÿ�ζ�Ҫ����ourMap���������ؾ��������ĵ�ͼ��Ϣͳһ��ourMap���棩��������enemyVisited��
+第一步initOurInfo(game)：初始化自身需要的各种信息，包括药水的位置(buffX, buffY)以及地图的标记ourMap、自己走过的路的标记ourVisited、对方走过的标记enemyVisited、地精上次选择的方向gnomeLastDir、处于player1或2的标记amIplayer1。
 
-������cutOurMap() �������·�����ù��ѣ�����㿪ʼ��������������������֧�����ϵĽڵ㣬������ͨ�����ķ���������һ�����Ѻ���findDeadEnd()��findDeadEnd()��һ���������δ̽�����Լ��յ㣬һ���ѵ��ͷ���false�����򷵻�true��Ϊ�����������·��cutOurMap()���յ�������Ϣ����ڸýڵ���ѡ���Ƿ��ո÷���
+第二步updateOurMap(game) ：每次都要更新ourMap（将三个地精所看到的地图信息统一在ourMap里面）、并更新enemyVisited。
 
-���Ĳ�findAllRoad()�����Ѿ��������·�ĵ�ͼ�ϣ��ҵ���ԭ������ܵ����δ̽��������յ�����ꡣ����Щ�����װ�������ﷵ�ء�
+第三步cutOurMap() ：封闭死路。利用广搜，从起点开始搜索，与遇到有三个分支或以上的节点，便向不是通往起点的方向启动另一个广搜函数findDeadEnd()。findDeadEnd()沿一个方向广搜未探索点以及终点，一旦搜到就返回false，否则返回true认为这个方向是死路。cutOurMap()接收到返回信息后便在该节点上选择是否封闭该方向。
 
-���岽findShortcut(road, game)���ҵ���ֻ�ؾ���������δ̽������յ�����ٲ�������һ��Ӧ�ߵķ��򡣽���Щ��Ϣ���µ�ԭ���������з��ء�
-gnomeXGo(road, game)����Xֻ�ؾ���ִ�еĲ��ԡ�
+第四步findAllRoad()：在已经封闭了死路的地图上，找到从原点出发能到达的未探索点或者终点的坐标。将这些坐标封装在数组里返回。
 
-��һֻ�ؾ�ʹ��δ̽���㵽Ŀ���������پ�����Ϊѡ��������ۺ���������Ŀ��㿪ʼ���趨Ϊ�յ㡣
+第五步findShortcut(road, game)：找到三只地精到达所有未探索点和终点的最少步数和下一步应走的方向。将这些信息更新到原来的数组中返回。
+gnomeXGo(road, game)：第X只地精所执行的策略。
 
-�ڶ�ֻ�ؾ�ʹ��ʹ��δ̽���㵽Ŀ���������پ����2�������ϵؾ��ߵ�δ̽����Ĳ���֮�ͣ���Ϊѡ��������ۺ���������Ŀ���ڿ�ʼʱ���趨Ϊ��������ҩˮ��һ���㣬�߹��˳��ߵ����֮�����Ⱥ�Ŀ�������趨Ϊ�յ㡣
+第一只地精使用未探索点到目标点的曼哈顿距离作为选择方向的评价函数。它的目标点开始就设定为终点。
 
-����ֻ�ؾ������ۺ�����ڶ�ֻ��ͬ������Ŀ���ڿ�ʼʱ���趨Ϊ�����̱�ҩˮ��һ���㣬�߹��˶̱ߵ����֮�����Ⱥ�Ŀ�������趨Ϊ�յ㡣
+第二只地精使用使用未探索点到目标点的曼哈顿距离的2倍，加上地精走到未探索点的步数之和，作为选择方向的评价函数。它的目标在开始时被设定为靠近长边药水的一个点，走过了长边的五分之三长度后，目标重新设定为终点。
+
+第三只地精的评价函数与第二只相同。它的目标在开始时被设定为靠近短边药水的一个点，走过了短边的五分之三长度后，目标重新设定为终点。

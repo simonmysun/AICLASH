@@ -1,3 +1,8 @@
+---
+layout: page
+title: 文档：34 队
+---
+
 ### 基于BFS的迷宫最短路智能搜索算法
 
 <div style="float:right;">海洋科学11级 黄</div>
